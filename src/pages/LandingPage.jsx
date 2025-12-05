@@ -7,6 +7,7 @@ import studentInternshipImage from '../assets/student_Internship.png'
 const enquiryImage = new URL('../assets/Enquiry.png', import.meta.url).href
 import vendorImage from '../assets/vendor.png'
 import partnerImage from '../assets/Partner.png'
+import dkitLogo from '../assets/dkit.png'
 
 const LandingPage = () => {
   const svgRef = useRef(null)
@@ -150,6 +151,26 @@ const LandingPage = () => {
         className="relative overflow-hidden bg-white"
         style={{ minHeight: '500px' }}
       >
+        {/* Logo and Company Name - Left Top */}
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 lg:top-8 lg:left-8 z-30">
+          <div className="flex items-center gap-2 md:gap-3">
+            {/* Small Logo */}
+            <img 
+              src={dkitLogo} 
+              alt="Durkkas Logo" 
+              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+            />
+            
+            {/* Company Name - Single Line */}
+            <h2 className="text-sm md:text-base lg:text-lg font-bold whitespace-nowrap" style={{
+              color: '#409891',
+              textShadow: '0 1px 2px rgba(64, 152, 145, 0.2)'
+            }}>
+              Durkkas Innovations Pvt Ltd
+            </h2>
+          </div>
+        </div>
+
         {/* Animated Blurred Background Circles - Left Side */}
         <div className="absolute left-0 top-0 w-1/2 h-full overflow-hidden pointer-events-none z-0">
           {/* Large Blurred Circle 1 */}
