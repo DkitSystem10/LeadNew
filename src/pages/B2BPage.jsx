@@ -15,7 +15,9 @@ const B2BPage = () => {
     organizationName: '',
     organizationAddress: '',
     businessType: '',
+    businessTypeOthers: '',
     modeOfBusiness: '',
+    modeOfBusinessOthers: '',
     companyWebsiteEmail: '',
     uploadFile: null,
     remarks: ''
@@ -84,8 +86,14 @@ const B2BPage = () => {
     if (!validateRequired(formData.businessType)) {
       newErrors.businessType = 'Business Type is required'
     }
+    if (formData.businessType === 'others' && !validateRequired(formData.businessTypeOthers)) {
+      newErrors.businessTypeOthers = 'Please specify the business type'
+    }
     if (!validateRequired(formData.modeOfBusiness)) {
       newErrors.modeOfBusiness = 'Mode of Business is required'
+    }
+    if (formData.modeOfBusiness === 'others' && !validateRequired(formData.modeOfBusinessOthers)) {
+      newErrors.modeOfBusinessOthers = 'Please specify the mode of business'
     }
     if (!validateRequired(formData.companyWebsiteEmail)) {
       newErrors.companyWebsiteEmail = 'Company Website / Email is required'
@@ -110,7 +118,17 @@ const B2BPage = () => {
     setIsSubmitting(true)
 
     try {
-      await submitB2BApplication(formData)
+      // Prepare submission data with "Others" text if applicable
+      const submissionData = {
+        ...formData,
+        businessType: formData.businessType === 'others' 
+          ? `Others: ${formData.businessTypeOthers}` 
+          : formData.businessType,
+        modeOfBusiness: formData.modeOfBusiness === 'others' 
+          ? `Others: ${formData.modeOfBusinessOthers}` 
+          : formData.modeOfBusiness
+      }
+      await submitB2BApplication(submissionData)
       navigate('/success', { 
         state: { 
           formType: 'B2B Application',
@@ -190,6 +208,18 @@ const B2BPage = () => {
               error={errors.businessType}
               required
             />
+            {formData.businessType === 'others' && (
+              <FormInput
+                label="Please specify"
+                type="text"
+                name="businessTypeOthers"
+                value={formData.businessTypeOthers}
+                onChange={handleChange}
+                error={errors.businessTypeOthers}
+                required
+                placeholder="Enter business type"
+              />
+            )}
               </div>
               <div>
             <FormSelect
@@ -201,6 +231,18 @@ const B2BPage = () => {
               error={errors.modeOfBusiness}
               required
             />
+            {formData.modeOfBusiness === 'others' && (
+              <FormInput
+                label="Please specify"
+                type="text"
+                name="modeOfBusinessOthers"
+                value={formData.modeOfBusinessOthers}
+                onChange={handleChange}
+                error={errors.modeOfBusinessOthers}
+                required
+                placeholder="Enter mode of business"
+              />
+            )}
               </div>
             </div>
 

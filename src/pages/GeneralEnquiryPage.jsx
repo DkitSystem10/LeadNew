@@ -25,6 +25,7 @@ const GeneralEnquiryPage = () => {
     phoneNumber: '',
     appointmentStatus: '',
     businessType: '',
+    businessTypeOthers: '',
     uploadFile: null,
     remarks: '',
     // Job Seeker fields
@@ -243,6 +244,9 @@ const GeneralEnquiryPage = () => {
       } else if (!validatePhone(formData.phoneNumber)) {
         newErrors.phoneNumber = 'Please enter a valid phone number'
       }
+      if (formData.businessType === 'others' && !validateRequired(formData.businessTypeOthers)) {
+        newErrors.businessTypeOthers = 'Please specify the business type'
+      }
     } else if (selectedCategory === 'job-seekers') {
       if (!validateRequired(formData.fullName)) newErrors.fullName = 'Full Name is required'
       if (!validateRequired(formData.email)) {
@@ -262,6 +266,9 @@ const GeneralEnquiryPage = () => {
         newErrors.email = 'Email is required'
       } else if (!validateEmail(formData.email)) {
         newErrors.email = 'Please enter a valid email address'
+      }
+      if (formData.businessType === 'others' && !validateRequired(formData.businessTypeOthers)) {
+        newErrors.businessTypeOthers = 'Please specify the business type'
       }
     } else if (selectedCategory === 'internship-applicants') {
       if (!validateRequired(formData.studentName)) newErrors.studentName = 'Student Name is required'
@@ -308,7 +315,9 @@ const GeneralEnquiryPage = () => {
           email: formData.email,
           phoneNumber: formData.phoneNumber,
           appointmentStatus: formData.appointmentStatus,
-          businessType: formData.businessType,
+          businessType: formData.businessType === 'others' 
+            ? `Others: ${formData.businessTypeOthers}` 
+            : formData.businessType,
           uploadFile: formData.uploadFile,
           remarks: formData.remarks
         }
@@ -344,7 +353,9 @@ const GeneralEnquiryPage = () => {
           contactPersonName: formData.contactPersonName,
           organizationName: formData.organizationName,
           organizationAddress: formData.organizationAddress,
-          businessType: formData.businessType,
+          businessType: formData.businessType === 'others' 
+            ? `Others: ${formData.businessTypeOthers}` 
+            : formData.businessType,
           modeOfBusiness: formData.modeOfBusiness,
           companyWebsiteEmail: formData.email,
           uploadFile: formData.uploadFile,
@@ -570,6 +581,18 @@ const GeneralEnquiryPage = () => {
             options={businessTypeOptions}
             error={errors.businessType}
           />
+          {formData.businessType === 'others' && (
+            <FormInput
+              label="Please specify"
+              type="text"
+              name="businessTypeOthers"
+              value={formData.businessTypeOthers}
+              onChange={handleChange}
+              error={errors.businessTypeOthers}
+              required
+              placeholder="Enter business type"
+            />
+          )}
           <FileUpload
             label="Upload File"
             onFileChange={handleFileChange}
@@ -719,6 +742,18 @@ const GeneralEnquiryPage = () => {
             options={businessTypeOptions}
             error={errors.businessType}
           />
+          {formData.businessType === 'others' && (
+            <FormInput
+              label="Please specify"
+              type="text"
+              name="businessTypeOthers"
+              value={formData.businessTypeOthers}
+              onChange={handleChange}
+              error={errors.businessTypeOthers}
+              required
+              placeholder="Enter business type"
+            />
+          )}
           <FormInput
             label="Mode of Business"
             type="text"

@@ -22,6 +22,7 @@ const VendorPage = () => {
     phoneNumber: '',
     appointmentStatus: '',
     businessType: '',
+    businessTypeOthers: '',
     uploadFile: null,
     remarks: ''
   })
@@ -278,6 +279,9 @@ const VendorPage = () => {
     if (!validateRequired(formData.businessType)) {
       newErrors.businessType = 'Business Type is required'
     }
+    if (formData.businessType === 'others' && !validateRequired(formData.businessTypeOthers)) {
+      newErrors.businessTypeOthers = 'Please specify the business type'
+    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -293,7 +297,14 @@ const VendorPage = () => {
     setIsSubmitting(true)
 
     try {
-      await submitVendorApplication(formData)
+      // Prepare submission data with "Others" text if applicable
+      const submissionData = {
+        ...formData,
+        businessType: formData.businessType === 'others' 
+          ? `Others: ${formData.businessTypeOthers}` 
+          : formData.businessType
+      }
+      await submitVendorApplication(submissionData)
       
       navigate('/success', { 
         state: { 
@@ -494,6 +505,18 @@ const VendorPage = () => {
                   error={errors.businessType}
                   required
                 />
+                {formData.businessType === 'others' && (
+                  <FormInput
+                    label="Please specify"
+                    type="text"
+                    name="businessTypeOthers"
+                    value={formData.businessTypeOthers}
+                    onChange={handleChange}
+                    error={errors.businessTypeOthers}
+                    required
+                    placeholder="Enter business type"
+                  />
+                )}
               </div>
             </div>
 

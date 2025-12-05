@@ -101,22 +101,173 @@ const TrainingSessionPage = () => {
   // Sub-Categories by Main Category
   const subCategories = {
     'ai-robotics': [
-      { id: 'k12-robotics', label: 'K-12 Robotics' },
-      { id: 'aicra-courses', label: 'AICRA Courses' }
+      { 
+        id: 'k12-robotics', 
+        label: 'K-12 Robotics',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="roboticsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#667EEA" />
+                <stop offset="100%" stopColor="#764BA2" />
+              </linearGradient>
+            </defs>
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#roboticsGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#roboticsGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      },
+      { 
+        id: 'aicra-courses', 
+        label: 'AICRA Courses',
+        image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1200&h=1200&fit=crop&q=90&auto=format',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="aicraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#4ECDC4" />
+                <stop offset="100%" stopColor="#44A08D" />
+              </linearGradient>
+            </defs>
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="url(#aicraGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#aicraGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      }
     ],
     'languages': [
-      { id: 'indian-languages', label: 'Indian Languages' },
-      { id: 'foreign-languages', label: 'Foreign Languages' }
+      { 
+        id: 'indian-languages', 
+        label: 'Indian Languages',
+        image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="indianLangGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#F093FB" />
+                <stop offset="100%" stopColor="#F5576C" />
+              </linearGradient>
+            </defs>
+            <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#indianLangGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#indianLangGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      },
+      { 
+        id: 'foreign-languages', 
+        label: 'Foreign Languages',
+        image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="foreignLangGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FA709A" />
+                <stop offset="100%" stopColor="#FEE140" />
+              </linearGradient>
+            </defs>
+            <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#foreignLangGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#foreignLangGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      }
     ],
     'finance': [
-      { id: 'accounting-taxation', label: 'Accounting & Taxation' },
-      { id: 'company-formation', label: 'Company Formation & Entrepreneurship' }
+      { 
+        id: 'accounting-taxation', 
+        label: 'Accounting & Taxation',
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="accountingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#30CFD0" />
+                <stop offset="100%" stopColor="#330867" />
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10" stroke="url(#accountingGradient)" strokeWidth="2" fill="url(#accountingGradient)" fillOpacity="0.1"/>
+            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" stroke="url(#accountingGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )
+      },
+      { 
+        id: 'company-formation', 
+        label: 'Company Formation & Entrepreneurship',
+        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="companyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FF6B6B" />
+                <stop offset="100%" stopColor="#FF8E53" />
+              </linearGradient>
+            </defs>
+            <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#companyGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#companyGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      }
     ],
     'business': [
-      { id: 'digital-business-admin', label: 'Digital Business Administration' },
-      { id: 'digital-entrepreneurship', label: 'Digital Entrepreneurship Development' },
-      { id: 'digital-content', label: 'Digital Content Development' },
-      { id: 'digital-marketing', label: 'Digital Marketing' }
+      { 
+        id: 'digital-business-admin', 
+        label: 'Digital Business Administration',
+        image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="businessAdminGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#4ECDC4" />
+                <stop offset="100%" stopColor="#44A08D" />
+              </linearGradient>
+            </defs>
+            <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#businessAdminGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#businessAdminGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      },
+      { 
+        id: 'digital-entrepreneurship', 
+        label: 'Digital Entrepreneurship Development',
+        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="entrepreneurshipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FA709A" />
+                <stop offset="100%" stopColor="#FEE140" />
+              </linearGradient>
+            </defs>
+            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="url(#entrepreneurshipGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#entrepreneurshipGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      },
+      { 
+        id: 'digital-content', 
+        label: 'Digital Content Development',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="contentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#667EEA" />
+                <stop offset="100%" stopColor="#764BA2" />
+              </linearGradient>
+            </defs>
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#contentGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#contentGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      },
+      { 
+        id: 'digital-marketing', 
+        label: 'Digital Marketing',
+        image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&h=1200&fit=crop&q=80',
+        icon: (
+          <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="marketingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#F093FB" />
+                <stop offset="100%" stopColor="#F5576C" />
+              </linearGradient>
+            </defs>
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00.94-2.61c0-.67-.34-1.33-.94-1.94M9 19H5a2 2 0 01-2-2V7a2 2 0 012-2h4m5 4a9 9 0 11-18 0 9 9 0 0118 0z" stroke="url(#marketingGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#marketingGradient)" fillOpacity="0.1"/>
+          </svg>
+        )
+      }
     ]
   }
 
@@ -343,19 +494,49 @@ const TrainingSessionPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4 md:px-0">
             {currentSubCategories.map((subCategory, index) => (
               <button
                 key={subCategory.id}
                 onClick={() => handleSubCategoryClick(subCategory.id)}
-                className="subcategory-card bg-white rounded-xl p-6 shadow-md border-2 border-gray-200 hover:border-[#409891] transition-all duration-300 hover:shadow-lg hover:scale-105 text-left"
+                className="category-card group relative rounded-xl md:rounded-2xl p-6 md:p-8 shadow-md border-2 border-gray-200 hover:border-[#409891] transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden"
                 style={{
-                  animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`
+                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
+                  aspectRatio: '1 / 1'
                 }}
               >
-                <h3 className="text-lg font-semibold text-gray-800 hover:text-[#409891] transition-colors duration-300">
-                  {subCategory.label}
-                </h3>
+                <div 
+                  className="absolute inset-0 transition-all duration-300"
+                  style={{
+                    backgroundImage: `url(${subCategory.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    filter: subCategory.id === 'aicra-courses' ? 'blur(1px)' : 'blur(2px)'
+                  }}
+                />
+                <div 
+                  className="absolute inset-0 transition-all duration-300"
+                  style={{
+                    background: subCategory.id === 'aicra-courses' 
+                      ? 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25))'
+                      : 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6))'
+                  }}
+                />
+                <div className="relative z-10 flex flex-col items-center text-center space-y-4">
+                  <div className="category-icon">
+                    {subCategory.icon}
+                  </div>
+                  <h3 className="text-sm sm:text-base md:text-lg font-semibold text-white drop-shadow-lg group-hover:text-[#48ADB7] transition-colors duration-300">
+                    {subCategory.label}
+                  </h3>
+                </div>
+                <div 
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                  style={{
+                    background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'
+                  }}
+                />
               </button>
             ))}
           </div>

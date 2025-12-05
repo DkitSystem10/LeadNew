@@ -27,7 +27,9 @@ const StudentInternshipPage = () => {
     collegeInstitutionName: '',
     courseType: '',
     department: '',
+    departmentOthers: '',
     internshipDomain: '',
+    internshipDomainOthers: '',
     duration: '',
     uploadFile: null,
     remarks: ''
@@ -251,8 +253,14 @@ const StudentInternshipPage = () => {
     if (!validateRequired(formData.department)) {
       newErrors.department = 'Department is required'
     }
+    if (formData.department === 'others' && !validateRequired(formData.departmentOthers)) {
+      newErrors.departmentOthers = 'Please specify the department'
+    }
     if (!validateRequired(formData.internshipDomain)) {
       newErrors.internshipDomain = 'Internship Domain is required'
+    }
+    if (formData.internshipDomain === 'others' && !validateRequired(formData.internshipDomainOthers)) {
+      newErrors.internshipDomainOthers = 'Please specify the internship domain'
     }
     if (!validateRequired(formData.duration)) {
       newErrors.duration = 'Duration is required'
@@ -272,7 +280,17 @@ const StudentInternshipPage = () => {
     setIsSubmitting(true)
 
     try {
-      await submitStudentInternshipApplication(formData)
+      // Prepare submission data with "Others" text if applicable
+      const submissionData = {
+        ...formData,
+        department: formData.department === 'others' 
+          ? `Others: ${formData.departmentOthers}` 
+          : formData.department,
+        internshipDomain: formData.internshipDomain === 'others' 
+          ? `Others: ${formData.internshipDomainOthers}` 
+          : formData.internshipDomain
+      }
+      await submitStudentInternshipApplication(submissionData)
       navigate('/success', { 
         state: { 
           formType: 'Internship Applicants Application',
@@ -536,6 +554,18 @@ const StudentInternshipPage = () => {
               error={errors.department}
               required
             />
+            {formData.department === 'others' && (
+              <FormInput
+                label="Please specify"
+                type="text"
+                name="departmentOthers"
+                value={formData.departmentOthers}
+                onChange={handleChange}
+                error={errors.departmentOthers}
+                required
+                placeholder="Enter department"
+              />
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -548,6 +578,18 @@ const StudentInternshipPage = () => {
               error={errors.internshipDomain}
               required
             />
+            {formData.internshipDomain === 'others' && (
+              <FormInput
+                label="Please specify"
+                type="text"
+                name="internshipDomainOthers"
+                value={formData.internshipDomainOthers}
+                onChange={handleChange}
+                error={errors.internshipDomainOthers}
+                required
+                placeholder="Enter internship domain"
+              />
+            )}
               </div>
               <div>
             <FormSelect

@@ -24,6 +24,7 @@ const CareerGuidancePage = () => {
     email: '',
     parentGuardianName: '',
     studiesPreference: '',
+    studiesPreferenceOthers: '',
     abroadLocal: '',
     preferredCountry: '',
     cityIfAbroad: '',
@@ -287,6 +288,9 @@ const CareerGuidancePage = () => {
     if (!validateRequired(formData.studiesPreference)) {
       newErrors.studiesPreference = 'Studies Preference is required'
     }
+    if (formData.studiesPreference === 'others' && !validateRequired(formData.studiesPreferenceOthers)) {
+      newErrors.studiesPreferenceOthers = 'Please specify the studies preference'
+    }
     if (!validateRequired(formData.abroadLocal)) {
       newErrors.abroadLocal = 'Abroad / Local is required'
     }
@@ -319,7 +323,14 @@ const CareerGuidancePage = () => {
     setIsSubmitting(true)
 
     try {
-      await submitCareerGuidanceApplication(formData)
+      // Prepare submission data with "Others" text if applicable
+      const submissionData = {
+        ...formData,
+        studiesPreference: formData.studiesPreference === 'others' 
+          ? `Others: ${formData.studiesPreferenceOthers}` 
+          : formData.studiesPreference
+      }
+      await submitCareerGuidanceApplication(submissionData)
       navigate('/success', { 
         state: { 
           formType: 'Career Guidance Application',
@@ -540,6 +551,18 @@ const CareerGuidancePage = () => {
               error={errors.studiesPreference}
               required
             />
+            {formData.studiesPreference === 'others' && (
+              <FormInput
+                label="Please specify"
+                type="text"
+                name="studiesPreferenceOthers"
+                value={formData.studiesPreferenceOthers}
+                onChange={handleChange}
+                error={errors.studiesPreferenceOthers}
+                required
+                placeholder="Enter studies preference"
+              />
+            )}
 
             <FormSelect
               label="Abroad / Local"

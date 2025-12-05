@@ -25,6 +25,7 @@ const JobSeekerPage = () => {
     email: '',
     qualification: '',
     department: '',
+    departmentOthers: '',
     yearsOfExperience: '',
     preferredJobType: '',
     uploadResume: null,
@@ -267,6 +268,9 @@ const JobSeekerPage = () => {
     if (!validateRequired(formData.department)) {
       newErrors.department = 'Department is required'
     }
+    if (formData.department === 'others' && !validateRequired(formData.departmentOthers)) {
+      newErrors.departmentOthers = 'Please specify the department'
+    }
     if (!validateRequired(formData.yearsOfExperience)) {
       newErrors.yearsOfExperience = 'Years of Experience is required'
     }
@@ -288,7 +292,14 @@ const JobSeekerPage = () => {
     setIsSubmitting(true)
 
     try {
-      await submitJobSeekerApplication(formData)
+      // Prepare submission data with "Others" text if applicable
+      const submissionData = {
+        ...formData,
+        department: formData.department === 'others' 
+          ? `Others: ${formData.departmentOthers}` 
+          : formData.department
+      }
+      await submitJobSeekerApplication(submissionData)
       navigate('/success', { 
         state: { 
           formType: 'Job Seeker Application',
@@ -523,6 +534,18 @@ const JobSeekerPage = () => {
               error={errors.department}
               required
             />
+            {formData.department === 'others' && (
+              <FormInput
+                label="Please specify"
+                type="text"
+                name="departmentOthers"
+                value={formData.departmentOthers}
+                onChange={handleChange}
+                error={errors.departmentOthers}
+                required
+                placeholder="Enter department"
+              />
+            )}
 
             <FormSelect
               label="Years of Experience"
