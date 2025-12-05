@@ -11,7 +11,7 @@ const Navbar = ({ onMenuClick }) => {
       boxShadow: '0 1px 0 rgba(0, 0, 0, 0.03)'
     }}>
       <div className="px-4 sm:px-6 lg:px-12">
-        <div className="flex items-center justify-between h-16 md:h-20 max-w-7xl mx-auto">
+        <div className="flex items-center justify-between h-20 md:h-24 lg:h-28 max-w-7xl mx-auto">
           {/* Mobile Menu Button - Always visible on mobile */}
           <button
             onClick={onMenuClick}
@@ -43,10 +43,9 @@ const Navbar = ({ onMenuClick }) => {
             <img 
               src={logoImage} 
               alt="Lead Centre" 
-              className="h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28 w-auto object-contain transition-all duration-300"
+              className="w-auto object-contain transition-all duration-300"
               style={{
-                filter: 'drop-shadow(0 2px 8px rgba(64, 152, 145, 0.15))',
-                minWidth: '150px'
+                filter: 'drop-shadow(0 2px 8px rgba(64, 152, 145, 0.15))'
               }}
             />
           </Link>

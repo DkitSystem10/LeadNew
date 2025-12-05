@@ -38,6 +38,24 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .navbar-logo img {
+    max-height: 72px;
+    height: auto;
+    width: auto;
+  }
+
+  @media (min-width: 768px) {
+    .navbar-logo img {
+      max-height: 88px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .navbar-logo img {
+      max-height: 108px;
+    }
+  }
+
   .elegant-lead,
   .elegant-centre {
     display: inline-block;

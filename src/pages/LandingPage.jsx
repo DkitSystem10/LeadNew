@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Card from '../components/Card'
 import jobSeekerImage from '../assets/Job_Seeker.png'
 import careerGuidanceImage from '../assets/Career_Guidance.png'
@@ -11,6 +11,15 @@ import dkitLogo from '../assets/dkit.png'
 
 const LandingPage = () => {
   const svgRef = useRef(null)
+  
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+  
+  const [showScrollTop, setShowScrollTop] = useState(false)
   
   useEffect(() => {
     const updateLines = () => {
@@ -62,6 +71,27 @@ const LandingPage = () => {
     window.addEventListener('resize', updateLines)
     return () => window.removeEventListener('resize', updateLines)
   }, [])
+
+  // Scroll to top button visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true)
+      } else {
+        setShowScrollTop(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
   const categories = [
     {
       title: 'Vendors / Suppliers',
@@ -109,6 +139,37 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-white">
+      {/* Main Quote - Top of Page */}
+      <div className="relative w-full pt-4 pb-0 bg-white z-30">
+        <div className="container-custom max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="hero-quote text-3xl md:text-4xl lg:text-5xl xl:text-6xl hero-fade-in italic" style={{ 
+              animationDelay: '0.3s',
+              lineHeight: '1.4',
+              letterSpacing: '0.02em',
+              wordSpacing: '0.1em',
+              margin: '0',
+              marginBottom: '0',
+              paddingTop: '0'
+            }}>
+              <span style={{ color: '#409891' }}>&quot;Your journey to success begins at Lead Centre.&quot;</span>
+            </h1>
+            <p className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-normal" style={{ 
+              color: '#666',
+              fontFamily: "'Inter', sans-serif",
+              letterSpacing: '-0.01em',
+              marginTop: '0.5rem',
+              marginBottom: '0'
+            }}>
+              Explore our services and find the perfect opportunity for you
+            </p>
+            <div className="w-24 h-px mx-auto mt-3 mb-4" style={{ 
+              background: 'linear-gradient(to right, transparent, #409891, #48ADB7, #409891, transparent)'
+            }}></div>
+          </div>
+        </div>
+      </div>
+
       {/* Snow Effect with Theme Colors */}
       <div className="snow-container fixed inset-0 pointer-events-none z-10 overflow-hidden">
         <div className="snowflake" style={{ '--delay': '0s', '--duration': '10s', '--left': '10%' }}></div>
@@ -146,282 +207,10 @@ const LandingPage = () => {
         <div className="snowflake" style={{ '--delay': '2.4s', '--duration': '16s', '--left': '48%' }}></div>
       </div>
 
-      {/* Hero Section */}
-      <div
-        className="relative overflow-hidden bg-white"
-        style={{ minHeight: '500px' }}
-      >
-        {/* Logo and Company Name - Left Top */}
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 lg:top-8 lg:left-8 z-30">
-          <div className="flex items-center gap-2 md:gap-3">
-            {/* Small Logo */}
-            <img 
-              src={dkitLogo} 
-              alt="Durkkas Logo" 
-              className="w-10 h-10 md:w-12 md:h-12 object-contain"
-            />
-            
-            {/* Company Name - Single Line */}
-            <h2 className="text-sm md:text-base lg:text-lg font-bold whitespace-nowrap" style={{
-              color: '#409891',
-              textShadow: '0 1px 2px rgba(64, 152, 145, 0.2)'
-            }}>
-              Durkkas Innovations Pvt Ltd
-            </h2>
-          </div>
-        </div>
-
-        {/* Animated Blurred Background Circles - Left Side */}
-        <div className="absolute left-0 top-0 w-1/2 h-full overflow-hidden pointer-events-none z-0">
-          {/* Large Blurred Circle 1 */}
-          <div className="blurred-circle-1 absolute rounded-full" style={{
-            width: '350px',
-            height: '350px',
-            backgroundColor: '#409891',
-            opacity: 0.15,
-            top: '5%',
-            left: '3%',
-            filter: 'blur(60px)'
-          }}></div>
-          
-          {/* Medium Blurred Circle 2 */}
-          <div className="blurred-circle-2 absolute rounded-full" style={{
-            width: '280px',
-            height: '280px',
-            backgroundColor: '#48ADB7',
-            opacity: 0.18,
-            top: '45%',
-            left: '12%',
-            filter: 'blur(50px)'
-          }}></div>
-          
-          {/* Small Blurred Circle 3 */}
-          <div className="blurred-circle-3 absolute rounded-full" style={{
-            width: '200px',
-            height: '200px',
-            backgroundColor: '#409891',
-            opacity: 0.2,
-            top: '65%',
-            left: '5%',
-            filter: 'blur(45px)'
-          }}></div>
-          
-          {/* Medium Blurred Circle 4 */}
-          <div className="blurred-circle-4 absolute rounded-full" style={{
-            width: '320px',
-            height: '320px',
-            backgroundColor: '#48ADB7',
-            opacity: 0.12,
-            top: '20%',
-            left: '22%',
-            filter: 'blur(55px)'
-          }}></div>
-          
-          {/* Small Blurred Circle 5 */}
-          <div className="blurred-circle-5 absolute rounded-full" style={{
-            width: '180px',
-            height: '180px',
-            backgroundColor: '#409891',
-            opacity: 0.16,
-            top: '55%',
-            left: '28%',
-            filter: 'blur(40px)'
-          }}></div>
-          
-          {/* Large Blurred Circle 6 */}
-          <div className="blurred-circle-6 absolute rounded-full" style={{
-            width: '300px',
-            height: '300px',
-            backgroundColor: '#48ADB7',
-            opacity: 0.14,
-            top: '8%',
-            left: '32%',
-            filter: 'blur(60px)'
-          }}></div>
-          
-          {/* Medium Blurred Circle 7 */}
-          <div className="blurred-circle-7 absolute rounded-full" style={{
-            width: '240px',
-            height: '240px',
-            backgroundColor: '#409891',
-            opacity: 0.17,
-            top: '75%',
-            left: '18%',
-            filter: 'blur(50px)'
-          }}></div>
-        </div>
-
-        {/* Hero Content Container */}
-        <div className="relative w-full h-full flex items-center justify-center z-20">
-          <div className="container-custom flex flex-col md:flex-row items-center justify-between gap-10 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Left: Content */}
-            <div className="max-w-3xl space-y-10 relative z-20">
-              {/* Main Quote */}
-              <div className="space-y-8">
-                <h1 className="hero-quote text-3xl md:text-4xl lg:text-5xl xl:text-6xl hero-fade-in italic" style={{ 
-                  animationDelay: '0.3s',
-                  lineHeight: '1.4',
-                  letterSpacing: '0.02em',
-                  wordSpacing: '0.1em',
-                  marginBottom: '1.5rem'
-                }}>
-                  <span style={{ color: '#409891' }}>&quot;Your journey to success begins at Lead Centre.&quot;</span>
-                </h1>
-              </div>
-              
-            </div>
-
-            {/* Right: Animation with Infographic Elements */}
-            <div className="relative flex items-center justify-center w-full md:w-auto" style={{ marginTop: '40px' }}>
-              {/* Large teal circle background */}
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 flex items-center justify-center mx-auto">
-                {/* Outer circle that highlights after all letters zoom in */}
-                <div className="outer-highlight-circle" />
-                
-                <div className="absolute inset-0 rounded-full" style={{
-                  backgroundColor: '#3D98B4',
-                  opacity: 0.15
-                }} />
-                
-                {/* Rotating Letter Circles - D U R K K A S */}
-                <div className="relative flex items-center justify-center">
-                  {/* Rotating container */}
-                  <div className="rotating-letters-container">
-                    {/* Connecting lines SVG - Hidden */}
-                    <svg ref={svgRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible', display: 'none' }}>
-                      <defs>
-                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#3D98B4" stopOpacity="0.4" />
-                          <stop offset="50%" stopColor="#3D98B4" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#3D98B4" stopOpacity="0.4" />
-                        </linearGradient>
-                      </defs>
-                      {/* Lines connecting letters - Hidden */}
-                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
-                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
-                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
-                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
-                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
-                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
-                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
-                    </svg>
-                    
-                    {/* D */}
-                    <div className="rotating-letter" style={{ '--angle': '0deg', '--delay': '0s' }}>
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
-                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
-                      }}>
-                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">D</span>
-                      </div>
-                    </div>
-
-                    {/* U */}
-                    <div className="rotating-letter" style={{ '--angle': '51.4deg', '--delay': '0.3s' }}>
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
-                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
-                      }}>
-                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">U</span>
-                      </div>
-                    </div>
-
-                    {/* R */}
-                    <div className="rotating-letter" style={{ '--angle': '102.8deg', '--delay': '0.6s' }}>
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
-                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
-                      }}>
-                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">R</span>
-                      </div>
-                    </div>
-
-                    {/* K */}
-                    <div className="rotating-letter" style={{ '--angle': '154.2deg', '--delay': '0.9s' }}>
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
-                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
-                      }}>
-                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">K</span>
-                      </div>
-                    </div>
-
-                    {/* K */}
-                    <div className="rotating-letter" style={{ '--angle': '205.6deg', '--delay': '1.2s' }}>
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
-                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
-                      }}>
-                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">K</span>
-                      </div>
-                    </div>
-
-                    {/* A */}
-                    <div className="rotating-letter" style={{ '--angle': '257deg', '--delay': '1.5s' }}>
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
-                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
-                      }}>
-                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">A</span>
-                      </div>
-                    </div>
-
-                    {/* S */}
-                    <div className="rotating-letter" style={{ '--angle': '308.4deg', '--delay': '1.8s' }}>
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
-                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
-                      }}>
-                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">S</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Central Circle with LEAD */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="bg-white border-2 rounded-full w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 flex items-center justify-center shadow-lg" style={{ borderColor: '#3D98B4' }}>
-                    <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-bold text-center tracking-wide" style={{ color: '#3D98B4' }}>
-                      LEAD
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Services Section */}
-      <div className="bg-white pb-0 pt-20 relative overflow-hidden">
+      <div className="bg-white pb-0 pt-0 relative overflow-hidden">
         <div className="container-custom relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-16">
-            <h2 className="services-heading text-5xl md:text-6xl lg:text-7xl font-light mb-6 tracking-tight" style={{ 
-              color: '#1a1a1a',
-              fontFamily: "'Cormorant Garamond', serif",
-              letterSpacing: '0.02em'
-            }}>
-              Our <span style={{ 
-                background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                fontWeight: '600'
-              }}>Services</span>
-            </h2>
-            <div className="w-24 h-px mx-auto mb-10" style={{ 
-              background: 'linear-gradient(to right, transparent, #409891, #48ADB7, #409891, transparent)'
-            }}></div>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-normal" style={{ 
-              color: '#666',
-              fontFamily: "'Inter', sans-serif",
-              letterSpacing: '-0.01em'
-            }}>
-          Explore our services and find the perfect opportunity for you
-        </p>
-      </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto pt-2">
         {categories.map((category, index) => (
           <Card
             key={index}
@@ -556,6 +345,303 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer Section with Animation */}
+      <div className="bg-white py-20 relative overflow-hidden">
+        {/* Animated Blurred Background Circles - Right Side */}
+        <div className="absolute right-0 top-0 w-1/2 h-full overflow-hidden pointer-events-none z-0">
+          {/* Large Blurred Circle 1 */}
+          <div className="blurred-circle-1 absolute rounded-full" style={{
+            width: '350px',
+            height: '350px',
+            backgroundColor: '#409891',
+            opacity: 0.15,
+            top: '5%',
+            right: '3%',
+            filter: 'blur(60px)'
+          }}></div>
+          
+          {/* Medium Blurred Circle 2 */}
+          <div className="blurred-circle-2 absolute rounded-full" style={{
+            width: '280px',
+            height: '280px',
+            backgroundColor: '#48ADB7',
+            opacity: 0.18,
+            top: '45%',
+            right: '12%',
+            filter: 'blur(50px)'
+          }}></div>
+          
+          {/* Small Blurred Circle 3 */}
+          <div className="blurred-circle-3 absolute rounded-full" style={{
+            width: '200px',
+            height: '200px',
+            backgroundColor: '#409891',
+            opacity: 0.2,
+            top: '65%',
+            right: '5%',
+            filter: 'blur(45px)'
+          }}></div>
+          
+          {/* Medium Blurred Circle 4 */}
+          <div className="blurred-circle-4 absolute rounded-full" style={{
+            width: '320px',
+            height: '320px',
+            backgroundColor: '#48ADB7',
+            opacity: 0.12,
+            top: '20%',
+            right: '22%',
+            filter: 'blur(55px)'
+          }}></div>
+          
+          {/* Small Blurred Circle 5 */}
+          <div className="blurred-circle-5 absolute rounded-full" style={{
+            width: '180px',
+            height: '180px',
+            backgroundColor: '#409891',
+            opacity: 0.16,
+            top: '55%',
+            right: '28%',
+            filter: 'blur(40px)'
+          }}></div>
+          
+          {/* Large Blurred Circle 6 */}
+          <div className="blurred-circle-6 absolute rounded-full" style={{
+            width: '300px',
+            height: '300px',
+            backgroundColor: '#48ADB7',
+            opacity: 0.14,
+            top: '8%',
+            right: '32%',
+            filter: 'blur(60px)'
+          }}></div>
+          
+          {/* Medium Blurred Circle 7 */}
+          <div className="blurred-circle-7 absolute rounded-full" style={{
+            width: '240px',
+            height: '240px',
+            backgroundColor: '#409891',
+            opacity: 0.17,
+            top: '75%',
+            right: '18%',
+            filter: 'blur(50px)'
+          }}></div>
+        </div>
+
+        <div className="container-custom relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+            {/* Left Side - Text + Logo + Company Name - Single Div */}
+            <div className="flex-1 flex flex-col lg:items-start items-center text-center lg:text-left">
+              <div className="space-y-4 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-6 md:p-8 shadow-lg border border-teal-100/50 w-full" style={{
+                background: 'linear-gradient(135deg, rgba(64, 152, 145, 0.05) 0%, rgba(72, 173, 183, 0.05) 100%)',
+                backdropFilter: 'blur(10px)'
+              }}>
+                <p className="text-xl md:text-2xl lg:text-3xl font-black leading-tight whitespace-nowrap" style={{
+                  fontFamily: "'Inter', sans-serif",
+                  background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  letterSpacing: '-0.02em',
+                  fontWeight: '900',
+                  textShadow: '0 2px 4px rgba(64, 152, 145, 0.1)'
+                }}>
+                  Empowering ideas with smart digital solutions,
+                </p>
+                <p className="text-lg md:text-xl lg:text-2xl font-bold leading-relaxed text-center" style={{
+                  fontFamily: "'Inter', sans-serif",
+                  letterSpacing: '-0.01em',
+                  background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
+                  crafted by
+                </p>
+                <div className="flex items-center justify-center gap-4 pt-2">
+                  <div className="relative">
+                    <div className="absolute inset-0 rounded-lg opacity-20 blur-md" style={{
+                      background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'
+                    }}></div>
+                    <img 
+                      src={dkitLogo} 
+                      alt="Durkkas Logo" 
+                      className="relative w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-lg"
+                    />
+                  </div>
+                  <div className="flex flex-col items-center lg:items-start">
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight text-center lg:text-left whitespace-nowrap" style={{
+                      background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      letterSpacing: '-0.01em'
+                    }}>
+                      Durkkas Innovations Pvt Ltd
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Animation with Infographic Elements */}
+            <div className="relative flex flex-col items-center justify-center w-full lg:w-auto">
+              {/* Large teal circle background */}
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 flex items-center justify-center mx-auto">
+                {/* Outer circle that highlights after all letters zoom in */}
+                <div className="outer-highlight-circle" />
+                
+                <div className="absolute inset-0 rounded-full" style={{
+                  backgroundColor: '#3D98B4',
+                  opacity: 0.15
+                }} />
+                
+                {/* Rotating Letter Circles - D U R K K A S */}
+                <div className="relative flex items-center justify-center">
+                  {/* Rotating container */}
+                  <div className="rotating-letters-container">
+                    {/* Connecting lines SVG - Hidden */}
+                    <svg ref={svgRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible', display: 'none' }}>
+                      <defs>
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#3D98B4" stopOpacity="0.4" />
+                          <stop offset="50%" stopColor="#3D98B4" stopOpacity="0.3" />
+                          <stop offset="100%" stopColor="#3D98B4" stopOpacity="0.4" />
+                        </linearGradient>
+                      </defs>
+                      {/* Lines connecting letters - Hidden */}
+                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
+                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
+                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
+                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
+                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
+                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
+                      <line stroke="url(#lineGradient)" strokeWidth="2" className="connecting-line" />
+                    </svg>
+                    
+                    {/* D */}
+                    <div className="rotating-letter" style={{ '--angle': '0deg', '--delay': '0s' }}>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
+                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
+                      }}>
+                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">D</span>
+                      </div>
+                    </div>
+
+                    {/* U */}
+                    <div className="rotating-letter" style={{ '--angle': '51.4deg', '--delay': '0.3s' }}>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
+                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
+                      }}>
+                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">U</span>
+                      </div>
+                    </div>
+
+                    {/* R */}
+                    <div className="rotating-letter" style={{ '--angle': '102.8deg', '--delay': '0.6s' }}>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
+                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
+                      }}>
+                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">R</span>
+                      </div>
+                    </div>
+
+                    {/* K */}
+                    <div className="rotating-letter" style={{ '--angle': '154.2deg', '--delay': '0.9s' }}>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
+                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
+                      }}>
+                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">K</span>
+                      </div>
+                    </div>
+
+                    {/* K */}
+                    <div className="rotating-letter" style={{ '--angle': '205.6deg', '--delay': '1.2s' }}>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
+                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
+                      }}>
+                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">K</span>
+                      </div>
+                    </div>
+
+                    {/* A */}
+                    <div className="rotating-letter" style={{ '--angle': '257deg', '--delay': '1.5s' }}>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
+                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
+                      }}>
+                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">A</span>
+                      </div>
+                    </div>
+
+                    {/* S */}
+                    <div className="rotating-letter" style={{ '--angle': '308.4deg', '--delay': '1.8s' }}>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg" style={{ 
+                        background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+                        boxShadow: '0 4px 15px rgba(64, 152, 145, 0.3), 0 0 20px rgba(72, 173, 183, 0.2)'
+                      }}>
+                        <span className="text-sm sm:text-base md:text-xl font-bold text-white">S</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Central Circle with LEAD */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="bg-white border-2 rounded-full w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 flex items-center justify-center shadow-lg" style={{ borderColor: '#3D98B4' }}>
+                    <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-bold text-center tracking-wide" style={{ color: '#3D98B4' }}>
+                      LEAD
+                    </h1>
+                  </div>
+                </div>
+              </div>
+
+              {/* Copyright Section - Inside Animation Area */}
+              <div className="mt-8 pt-6">
+                <p className="text-center text-sm md:text-base text-gray-600" style={{
+                  fontFamily: "'Inter', sans-serif",
+                  letterSpacing: '-0.01em'
+                }}>
+                  © {new Date().getFullYear()} Durkkas Innovations Pvt Ltd. All rights reserved.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll to Top Button - Right Bottom */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-3xl"
+          style={{
+            background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
+            boxShadow: '0 4px 20px rgba(64, 152, 145, 0.4)'
+          }}
+          aria-label="Scroll to top"
+        >
+          <svg
+            className="w-6 h-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={3}
+              d="M5 10l7-7m0 0l7 7m-7-7v18"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   )
 }

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
-import Footer from './Footer'
 
 const Layout = ({ children }) => {
   const location = useLocation()
@@ -29,7 +28,6 @@ const Layout = ({ children }) => {
           {children}
         </main>
       </div>
-      <Footer />
     </div>
   )
 }
