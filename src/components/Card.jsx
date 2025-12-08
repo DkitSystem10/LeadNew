@@ -47,7 +47,7 @@ const Card = ({ title, icon, image, link, description, index }) => {
           </div>
             
             {/* Title */}
-            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300" style={{ 
+            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{ 
               color: '#1a1a1a',
               fontFamily: "'Inter', sans-serif",
               letterSpacing: '-0.02em'
@@ -98,7 +98,7 @@ const Card = ({ title, icon, image, link, description, index }) => {
         </div>
             
             {/* Title */}
-            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300" style={{ 
+            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{ 
               color: '#1a1a1a',
               fontFamily: "'Inter', sans-serif",
               letterSpacing: '-0.02em'

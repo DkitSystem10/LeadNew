@@ -11,7 +11,7 @@ const Navbar = ({ onMenuClick }) => {
       boxShadow: '0 1px 0 rgba(0, 0, 0, 0.03)'
     }}>
       <div className="px-4 sm:px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20 md:h-24 lg:h-28 max-w-7xl mx-auto">
+        <div className="flex items-center justify-between h-14 md:h-16 lg:h-16 max-w-7xl mx-auto">
           {/* Mobile Menu Button - Always visible on mobile */}
           <button
             onClick={onMenuClick}

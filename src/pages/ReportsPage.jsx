@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 
 const ReportsPage = () => {
+  const navigate = useNavigate()
   const [stats, setStats] = useState({
     vendors: 0,
     partners: 0,
@@ -20,9 +22,26 @@ const ReportsPage = () => {
     careerGuidance: []
   })
   const [showDetails, setShowDetails] = useState(null) // 'vendors', 'partners', 'jobSeekers', etc.
+  const [selectedCategory, setSelectedCategory] = useState(null) // { type: 'vendors', category: 'category_name' }
+  const [userDetails, setUserDetails] = useState([])
+  const [loadingDetails, setLoadingDetails] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [lastUpdated, setLastUpdated] = useState(null)
+
+  // Check authentication
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
+    if (!isAuthenticated) {
+      navigate('/login', { replace: true })
+    }
+  }, [navigate])
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated')
+    localStorage.removeItem('userId')
+    navigate('/login', { replace: true })
+  }
 
   useEffect(() => {
     fetchAllStats()
@@ -132,6 +151,251 @@ const ReportsPage = () => {
       setError('Failed to load statistics. Please try again.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchUserDetailsByCategory = async (type, category) => {
+    try {
+      setLoadingDetails(true)
+      setError(null)
+      
+      let tableName = ''
+      let query = null
+      let useSubCategory = false
+      
+      // Handle special cases and determine table name
+      if (type === 'vendors') {
+        if (category === 'B2B Applications') {
+          tableName = 'b2b_applications'
+          query = supabase.from(tableName).select('*').order('created_at', { ascending: false })
+        } else {
+          tableName = 'vendor_applications'
+          query = supabase.from(tableName)
+            .select('*')
+            .eq('category', category)
+            .order('created_at', { ascending: false })
+        }
+      } else if (type === 'partners') {
+        tableName = 'partner'
+        query = supabase.from(tableName)
+          .select('*')
+          .eq('category', category)
+          .order('created_at', { ascending: false })
+      } else if (type === 'jobSeekers') {
+        tableName = 'job_seeker_applications'
+        query = supabase.from(tableName)
+          .select('*')
+          .eq('category', category)
+          .order('created_at', { ascending: false })
+      } else if (type === 'studentInternships') {
+        tableName = 'student_internship_applications'
+        query = supabase.from(tableName)
+          .select('*')
+          .eq('category', category)
+          .order('created_at', { ascending: false })
+      } else if (type === 'courseEnquiries') {
+        tableName = 'course_enquiry_registrations'
+        useSubCategory = true
+        query = supabase.from(tableName)
+          .select('*')
+          .or(`category.eq.${category},sub_category.eq.${category}`)
+          .order('created_at', { ascending: false })
+      } else if (type === 'careerGuidance') {
+        tableName = 'career_guidance_applications'
+        query = supabase.from(tableName)
+          .select('*')
+          .eq('category', category)
+          .order('created_at', { ascending: false })
+      }
+      
+      if (!query) {
+        throw new Error('Invalid category type')
+      }
+      
+      const { data, error: fetchError } = await query
+      
+      if (fetchError) {
+        throw fetchError
+      }
+      
+      setUserDetails(data || [])
+      setSelectedCategory({ type, category })
+    } catch (err) {
+      console.error('Error fetching user details:', err)
+      setError('Failed to load user details. Please try again.')
+    } finally {
+      setLoadingDetails(false)
+    }
+  }
+
+  const formatFieldName = (field) => {
+    return field
+      .replace(/_/g, ' ')
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => str.toUpperCase())
+      .trim()
+  }
+
+  const formatFieldValue = (value) => {
+    if (value === null || value === undefined || value === '') {
+      return 'N/A'
+    }
+    if (typeof value === 'boolean') {
+      return value ? 'Yes' : 'No'
+    }
+    if (typeof value === 'object') {
+      return JSON.stringify(value, null, 2)
+    }
+    return String(value)
+  }
+
+  const getUserDisplayFields = (type, item) => {
+    if (type === 'vendors' && item.contact_person_name) {
+      // B2B Applications
+      return {
+        'Contact Person': item.contact_person_name,
+        'Organization Name': item.organization_name,
+        'Organization Address': item.organization_address,
+        'Business Type': item.business_type,
+        'Mode of Business': item.mode_of_business,
+        'Email': item.company_website_email,
+        'Date': item.date,
+        'Remarks': item.remarks
+      }
+    } else if (type === 'vendors') {
+      // Vendor Applications
+      return {
+        'Vendor Name': item.vendor_name,
+        'Company Name': item.company_name,
+        'Company Address': item.company_address,
+        'Email': item.email,
+        'Phone Number': item.phone_number,
+        'Appointment Status': item.appointment_status,
+        'Business Type': item.business_type,
+        'Date': item.date,
+        'Remarks': item.remarks
+      }
+    } else if (type === 'partners') {
+      return {
+        'Partner Name': item.partner_name,
+        'Company Name': item.company_name,
+        'Email': item.email,
+        'Phone Number': item.phone_number,
+        'Business Type': item.business_type,
+        'Date': item.date,
+        'Remarks': item.remarks
+      }
+    } else if (type === 'jobSeekers') {
+      return {
+        'Full Name': item.full_name,
+        'Gender': item.gender,
+        'Date of Birth': item.dob,
+        'Age': item.age,
+        'Address': item.address,
+        'Blood Group': item.blood_group,
+        'Contact Number': item.contact_number,
+        'Email': item.email,
+        'Qualification': item.qualification,
+        'Department': item.department,
+        'Years of Experience': item.years_of_experience,
+        'Preferred Job Type': item.preferred_job_type,
+        'Date': item.date,
+        'Remarks': item.remarks
+      }
+    } else if (type === 'studentInternships') {
+      return {
+        'Student Name': item.student_name,
+        'Gender': item.gender,
+        'Date of Birth': item.dob,
+        'Age': item.age,
+        'Address': item.address,
+        'Contact Number': item.contact_number,
+        'Email': item.email,
+        'Qualification': item.qualification,
+        'Department': item.department,
+        'Date': item.date,
+        'Remarks': item.remarks
+      }
+    } else if (type === 'courseEnquiries') {
+      return {
+        'Student Name': item.student_name,
+        'Gender': item.gender,
+        'Date of Birth': item.dob,
+        'Age': item.age,
+        'Address': item.address,
+        'Contact Number': item.contact_number,
+        'Email': item.email,
+        'Qualification': item.qualification,
+        'Category': item.category,
+        'Sub Category': item.sub_category,
+        'Date': item.date,
+        'Remarks': item.remarks
+      }
+    } else if (type === 'careerGuidance') {
+      return {
+        'Name': item.name,
+        'Gender': item.gender,
+        'Date of Birth': item.dob,
+        'Age': item.age,
+        'Address': item.address,
+        'Contact Number': item.contact_number,
+        'Email': item.email,
+        'Qualification': item.qualification,
+        'Date': item.date,
+        'Remarks': item.remarks
+      }
+    }
+    return {    }
+  }
+
+  const categoryInfo = {
+    vendors: { 
+      title: 'Vendors / Suppliers', 
+      count: stats.vendors, 
+      gradient: 'linear-gradient(to right, #3B82F6, #2563EB)',
+      bgGradient: 'linear-gradient(to right, #EFF6FF, #DBEAFE)',
+      hoverColor: '#DBEAFE',
+      cardColor: '#3B82F6'
+    },
+    partners: { 
+      title: 'Partners', 
+      count: stats.partners, 
+      gradient: 'linear-gradient(to right, #10B981, #059669)',
+      bgGradient: 'linear-gradient(to right, #ECFDF5, #D1FAE5)',
+      hoverColor: '#D1FAE5',
+      cardColor: '#10B981'
+    },
+    jobSeekers: { 
+      title: 'Job Seekers', 
+      count: stats.jobSeekers, 
+      gradient: 'linear-gradient(to right, #8B5CF6, #7C3AED)',
+      bgGradient: 'linear-gradient(to right, #F5F3FF, #EDE9FE)',
+      hoverColor: '#EDE9FE',
+      cardColor: '#8B5CF6'
+    },
+    studentInternships: { 
+      title: 'Internship Applicants', 
+      count: stats.studentInternships, 
+      gradient: 'linear-gradient(to right, #F97316, #EA580C)',
+      bgGradient: 'linear-gradient(to right, #FFF7ED, #FFEDD5)',
+      hoverColor: '#FFEDD5',
+      cardColor: '#F97316'
+    },
+    courseEnquiries: { 
+      title: 'Course Enquiry / Registration', 
+      count: stats.courseEnquiries, 
+      gradient: 'linear-gradient(to right, #EC4899, #DB2777)',
+      bgGradient: 'linear-gradient(to right, #FDF2F8, #FCE7F3)',
+      hoverColor: '#FCE7F3',
+      cardColor: '#EC4899'
+    },
+    careerGuidance: { 
+      title: 'Career Guidance', 
+      count: stats.careerGuidance, 
+      gradient: 'linear-gradient(to right, #14B8A6, #0D9488)',
+      bgGradient: 'linear-gradient(to right, #F0FDFA, #CCFBF1)',
+      hoverColor: '#CCFBF1',
+      cardColor: '#14B8A6'
     }
   }
 
@@ -253,6 +517,16 @@ const ReportsPage = () => {
                 </svg>
                 Refresh
               </button>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
+                title="Logout"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout
+              </button>
             </div>
           </div>
           {lastUpdated && (
@@ -342,57 +616,6 @@ const ReportsPage = () => {
 
         {/* Category Subcategory Details Modal */}
         {showDetails && (() => {
-          const categoryInfo = {
-            vendors: { 
-              title: 'Vendors / Suppliers', 
-              count: stats.vendors, 
-              gradient: 'linear-gradient(to right, #3B82F6, #2563EB)',
-              bgGradient: 'linear-gradient(to right, #EFF6FF, #DBEAFE)',
-              hoverColor: '#DBEAFE',
-              cardColor: '#3B82F6'
-            },
-            partners: { 
-              title: 'Partners', 
-              count: stats.partners, 
-              gradient: 'linear-gradient(to right, #10B981, #059669)',
-              bgGradient: 'linear-gradient(to right, #ECFDF5, #D1FAE5)',
-              hoverColor: '#D1FAE5',
-              cardColor: '#10B981'
-            },
-            jobSeekers: { 
-              title: 'Job Seekers', 
-              count: stats.jobSeekers, 
-              gradient: 'linear-gradient(to right, #8B5CF6, #7C3AED)',
-              bgGradient: 'linear-gradient(to right, #F5F3FF, #EDE9FE)',
-              hoverColor: '#EDE9FE',
-              cardColor: '#8B5CF6'
-            },
-            studentInternships: { 
-              title: 'Internship Applicants', 
-              count: stats.studentInternships, 
-              gradient: 'linear-gradient(to right, #F97316, #EA580C)',
-              bgGradient: 'linear-gradient(to right, #FFF7ED, #FFEDD5)',
-              hoverColor: '#FFEDD5',
-              cardColor: '#F97316'
-            },
-            courseEnquiries: { 
-              title: 'Course Enquiry / Registration', 
-              count: stats.courseEnquiries, 
-              gradient: 'linear-gradient(to right, #EC4899, #DB2777)',
-              bgGradient: 'linear-gradient(to right, #FDF2F8, #FCE7F3)',
-              hoverColor: '#FCE7F3',
-              cardColor: '#EC4899'
-            },
-            careerGuidance: { 
-              title: 'Career Guidance', 
-              count: stats.careerGuidance, 
-              gradient: 'linear-gradient(to right, #14B8A6, #0D9488)',
-              bgGradient: 'linear-gradient(to right, #F0FDFA, #CCFBF1)',
-              hoverColor: '#CCFBF1',
-              cardColor: '#14B8A6'
-            }
-          }
-          
           const info = categoryInfo[showDetails]
           const currentStats = categoryStats[showDetails] || []
           
@@ -433,7 +656,15 @@ const ReportsPage = () => {
                   {currentStats.length > 0 ? (
                     <>
                       <div className="mb-4">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-3">Subcategory Breakdown</h3>
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-lg font-semibold text-gray-700">Subcategory Breakdown</h3>
+                          <p className="text-xs text-gray-500 flex items-center gap-1">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Click on any category row to view user details
+                          </p>
+                        </div>
                       </div>
                       <div className="overflow-x-auto">
                         <table className="w-full">
@@ -460,12 +691,30 @@ const ReportsPage = () => {
                             {currentStats.map((item, index) => {
                               const percentage = info.count > 0 ? (item.count / info.count) * 100 : 0
                               return (
-                                <tr key={item.category} className="transition-colors" style={{ '--hover-color': info.hoverColor }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = info.hoverColor} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                <tr 
+                                  key={item.category} 
+                                  onClick={() => fetchUserDetailsByCategory(showDetails, item.category)}
+                                  className="transition-all cursor-pointer hover:shadow-md hover:scale-[1.01]" 
+                                  style={{ '--hover-color': info.hoverColor }} 
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.backgroundColor = info.hoverColor
+                                    e.currentTarget.style.transform = 'scale(1.01)'
+                                  }} 
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.backgroundColor = 'transparent'
+                                    e.currentTarget.style.transform = 'scale(1)'
+                                  }}
+                                  title="Click to view user details for this category"
+                                >
                                   <td className="px-4 py-3 text-sm text-gray-500">
                                     {index + 1}
                                   </td>
-                                  <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                                  <td className="px-4 py-3 text-sm font-medium text-gray-900 flex items-center gap-2">
                                     {item.category || 'Uncategorized'}
+                                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
                                   </td>
                                   <td className="px-4 py-3 text-sm text-gray-900 text-right font-semibold">
                                     {item.count.toLocaleString()}
@@ -553,6 +802,137 @@ const ReportsPage = () => {
             </div>
           )
         })()}
+
+        {/* User Details Modal */}
+        {selectedCategory && (
+          <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4" onClick={() => { setSelectedCategory(null); setUserDetails([]) }}>
+            <div className="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
+              <div className="p-6 border-b border-gray-200 flex items-center justify-between flex-shrink-0" style={{ background: categoryInfo[selectedCategory.type]?.bgGradient || '#F3F4F6' }}>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <button
+                      onClick={() => { setSelectedCategory(null); setUserDetails([]) }}
+                      className="p-2 hover:bg-white/50 rounded-lg transition-colors"
+                      title="Back to categories"
+                    >
+                      <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <h2 className="text-2xl font-bold" style={{ color: '#1F2937' }}>
+                      {selectedCategory.category} - User Details
+                    </h2>
+                  </div>
+                  <p className="text-sm text-gray-600 ml-12">
+                    {categoryInfo[selectedCategory.type]?.title} - Full user information ({userDetails.length} {userDetails.length === 1 ? 'user' : 'users'})
+                  </p>
+                </div>
+                <button
+                  onClick={() => { setSelectedCategory(null); setUserDetails([]) }}
+                  className="p-2 hover:bg-white/50 rounded-lg transition-colors ml-4"
+                >
+                  <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto p-6">
+                {loadingDetails ? (
+                  <div className="flex items-center justify-center py-12">
+                    <div className="text-center">
+                      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#409891] mb-4"></div>
+                      <p className="text-gray-600">Loading user details...</p>
+                    </div>
+                  </div>
+                ) : userDetails.length > 0 ? (
+                  <div className="space-y-6">
+                    {userDetails.map((item, index) => {
+                      const displayFields = getUserDisplayFields(selectedCategory.type, item)
+                      return (
+                        <div 
+                          key={item.id || index} 
+                          className="bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden"
+                        >
+                          <div className="p-5 border-b border-gray-200" style={{ background: categoryInfo[selectedCategory.type]?.bgGradient || '#F3F4F6' }}>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ background: categoryInfo[selectedCategory.type]?.gradient || '#6B7280' }}>
+                                  {index + 1}
+                                </div>
+                                <div>
+                                  <h3 className="text-lg font-semibold text-gray-900">
+                                    {item.vendor_name || item.contact_person_name || item.partner_name || item.full_name || item.student_name || item.name || `User #${index + 1}`}
+                                  </h3>
+                                  <p className="text-sm text-gray-600">
+                                    {item.email || item.company_website_email || 'No email provided'}
+                                  </p>
+                                </div>
+                              </div>
+                              {item.date && (
+                                <div className="text-right">
+                                  <p className="text-xs text-gray-500 mb-1">Submitted</p>
+                                  <p className="text-sm font-medium text-gray-700">
+                                    {new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          
+                          <div className="p-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {Object.entries(displayFields).map(([key, value]) => {
+                                if (key === 'Remarks' && !value) return null
+                                return (
+                                  <div key={key} className="space-y-1">
+                                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      {key}
+                                    </p>
+                                    <p className="text-sm text-gray-900 break-words">
+                                      {formatFieldValue(value)}
+                                    </p>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                            
+                            {(item.upload_file_url || item.upload_resume_url) && (
+                              <div className="mt-4 pt-4 border-t border-gray-200">
+                                <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
+                                  Uploaded File
+                                </p>
+                                <a 
+                                  href={item.upload_file_url || item.upload_resume_url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                  </svg>
+                                  View File
+                                </a>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <p className="text-gray-500 text-lg">No user details found</p>
+                    <p className="text-gray-400 text-sm mt-2">No records available for this category</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Summary Table */}
         <div className="mt-8 px-4">
