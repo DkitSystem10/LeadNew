@@ -122,6 +122,7 @@ const CareerGuidancePage = () => {
               <stop offset="0%" stopColor="#667EEA" />
               <stop offset="100%" stopColor="#764BA2" />
             </linearGradient>
+            
           </defs>
           <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="url(#testGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#testGradient)" fillOpacity="0.1"/>
         </svg>
