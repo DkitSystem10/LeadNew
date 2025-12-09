@@ -34,8 +34,14 @@ const MobileMenu = ({ isOpen, onClose }) => {
   ]
 
   const handleLogout = () => {
+    // Clear all session storage
+    sessionStorage.removeItem('isAuthenticated')
+    sessionStorage.removeItem('userId')
+    sessionStorage.removeItem('userDisplayName')
+    // Also clear localStorage if any exists
     localStorage.removeItem('isAuthenticated')
     localStorage.removeItem('userId')
+    localStorage.removeItem('userDisplayName')
     navigate('/login', { replace: true })
     onClose()
   }

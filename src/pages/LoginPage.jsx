@@ -21,16 +21,7 @@ const LoginPage = () => {
   const navigate = useNavigate()
   const svgRef = useRef(null)
 
-  // Redirect if already authenticated
-  useEffect(() => {
-    const checkAuth = () => {
-      const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
-      if (isAuthenticated) {
-        navigate('/', { replace: true })
-      }
-    }
-    checkAuth()
-  }, [navigate])
+  // No auto-login - user must manually login every time
 
   // Animation lines update effect
   useEffect(() => {
@@ -96,10 +87,10 @@ const LoginPage = () => {
     )
 
     if (user) {
-      // Store authentication in localStorage
-      localStorage.setItem('isAuthenticated', 'true')
-      localStorage.setItem('userId', trimmedUserId)
-      localStorage.setItem('userDisplayName', user.displayName || trimmedUserId)
+      // Store authentication in sessionStorage (clears when browser closes)
+      sessionStorage.setItem('isAuthenticated', 'true')
+      sessionStorage.setItem('userId', trimmedUserId)
+      sessionStorage.setItem('userDisplayName', user.displayName || trimmedUserId)
       
       // Redirect to index page
       navigate('/')
@@ -335,7 +326,7 @@ const LoginPage = () => {
                   onChange={(e) => setUserId(e.target.value)}
                   className="block w-full pl-10 pr-4 py-3.5 text-sm sm:text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#409891] focus:border-[#409891] transition-all duration-200 bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-md"
                   placeholder="Enter your User ID"
-                  autoComplete="username"
+                  autoComplete="off"
                 />
               </div>
             </div>
@@ -360,7 +351,7 @@ const LoginPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full pl-10 pr-4 py-3.5 text-sm sm:text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#409891] focus:border-[#409891] transition-all duration-200 bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-md"
                   placeholder="Enter your password"
-                  autoComplete="current-password"
+                  autoComplete="off"
                 />
               </div>
             </div>

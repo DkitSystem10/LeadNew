@@ -7,8 +7,14 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
   const [categoriesOpen, setCategoriesOpen] = useState(false)
 
   const handleLogout = () => {
+    // Clear all session storage
+    sessionStorage.removeItem('isAuthenticated')
+    sessionStorage.removeItem('userId')
+    sessionStorage.removeItem('userDisplayName')
+    // Also clear localStorage if any exists
     localStorage.removeItem('isAuthenticated')
     localStorage.removeItem('userId')
+    localStorage.removeItem('userDisplayName')
     navigate('/login', { replace: true })
     onClose()
   }
@@ -62,7 +68,7 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
       {/* Sidebar */}
       <aside 
         className={`
-          fixed lg:sticky top-0 left-0 h-screen flex flex-col shadow-lg z-50
+          fixed lg:fixed top-0 left-0 h-screen flex flex-col shadow-lg z-50
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           ${!showOnDesktop ? 'lg:hidden' : ''}
@@ -70,7 +76,9 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
         `}
         style={{
           background: 'linear-gradient(to bottom, #E6E5E1 0%, #E6E5E1 100%)',
-          borderRight: '1px solid rgba(64, 152, 145, 0.15)'
+          borderRight: '1px solid rgba(64, 152, 145, 0.15)',
+          overflowY: 'auto',
+          overflowX: 'hidden'
         }}
       >
         {/* Mobile Close Button */}
@@ -93,7 +101,7 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
           </button>
         </div>
 
-        <div className="p-4 flex-grow overflow-y-auto">
+        <div className="p-4 flex-grow overflow-y-auto" style={{ maxHeight: 'calc(100vh - 140px)' }}>
           <nav className="space-y-2">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path

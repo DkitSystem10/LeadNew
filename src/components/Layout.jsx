@@ -39,7 +39,7 @@ const Layout = ({ children }) => {
       <div className="flex flex-grow relative w-full max-w-full">
         {/* Sidebar - Always available on mobile, conditional on desktop */}
         <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} showOnDesktop={showSidebar} />
-        <main className={`flex-grow w-full lg:w-auto overflow-x-hidden max-w-full ${isHomePage || isContactPage ? 'bg-white' : 'bg-[#F5F7FA]'}`}>
+        <main className={`flex-grow w-full ${showSidebar ? 'lg:ml-64 xl:ml-64' : ''} lg:w-auto overflow-x-hidden max-w-full overflow-y-auto ${isHomePage || isContactPage ? 'bg-white' : 'bg-[#F5F7FA]'}`} style={{ height: 'calc(100vh - 56px)', marginTop: isHomePage ? '56px' : '0' }}>
           {children}
         </main>
       </div>
