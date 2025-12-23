@@ -229,7 +229,18 @@ const PartnersPage = () => {
   // Sub-Categories View
   if (view === 'subcategories') {
     return (
-      <div className="container-custom py-6 md:py-8 lg:py-12">
+      <div className="container-custom py-6 md:py-8 lg:py-12 relative">
+        {/* Mobile Floating Back Button */}
+        <button
+          onClick={() => navigate('/')}
+          className="lg:hidden fixed top-4 left-4 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-[#409891] text-white shadow-lg active:scale-95 transition-all duration-200"
+          aria-label="Go back"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-10 px-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-3" style={{ color: '#1F2937' }}>

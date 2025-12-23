@@ -169,12 +169,13 @@ const LandingPage = () => {
               </div>
 
               {/* Main Heading - Reduced Margin & Size */}
-              <h1 className="hero-fade-in text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight mb-4" style={{ animationDelay: '0.1s' }}>
-                <span className="font-serif italic text-[#409891] drop-shadow-sm">"Every Lead Is An Accountable"</span>
+              <h1 className="hero-fade-in text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight mb-4 px-2" style={{ animationDelay: '0.1s' }}>
+                <span className="font-serif italic text-[#409891] drop-shadow-sm block sm:inline">"Every Lead Is An </span>
+                <span className="font-serif italic text-[#409891] drop-shadow-sm block sm:inline">Accountable"</span>
               </h1>
 
               {/* Subheading - Reduced Margin */}
-              <p className="hero-fade-in mt-2 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed" style={{ animationDelay: '0.2s' }}>
+              <p className="hero-fade-in mt-2 text-base sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed px-4" style={{ animationDelay: '0.2s' }}>
                 The central hub connecting vendors, partners, and job seekers with opportunities.
               </p>
             </div>
@@ -251,11 +252,10 @@ const LandingPage = () => {
         </div>
       </footer>
 
-      {/* Scroll to Top Button - Right Bottom */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-3xl"
+          className="fixed bottom-28 sm:bottom-32 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-3xl"
           style={{
             background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
             boxShadow: '0 4px 20px rgba(64, 152, 145, 0.4)'

@@ -23,12 +23,11 @@ const Card = ({ title, icon, image, link, description, index }) => {
         e.currentTarget.style.boxShadow = '0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04)'
       }}>
 
-      <div className="flex flex-col h-full relative z-10 p-8">
+      <div className="flex flex-col h-full relative z-10 p-5 sm:p-8">
         {image ? (
           <>
             {/* Image Container */}
-            <div className="w-full flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-gray-50 transition-all duration-500 group-hover:shadow-md" style={{
-              height: '220px',
+            <div className="w-full h-48 sm:h-[220px] flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-gray-50 transition-all duration-500 sm:group-hover:shadow-md" style={{
               border: '1px solid rgba(0, 0, 0, 0.05)'
             }}>
               <div className="relative w-full h-full overflow-hidden p-4">
@@ -47,17 +46,19 @@ const Card = ({ title, icon, image, link, description, index }) => {
             </div>
 
             {/* Title */}
-            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{
+            <h3 className="text-[17px] sm:text-2xl font-bold mb-3 transition-all duration-300 leading-tight text-center sm:text-left h-12 sm:h-auto flex items-center justify-center sm:justify-start" style={{
               color: '#1a1a1a',
               fontFamily: "'Inter', sans-serif",
-              letterSpacing: '-0.02em'
+              letterSpacing: '-0.01em',
+              wordBreak: 'break-word',
+              overflow: 'hidden'
             }}>
               {title}
             </h3>
 
             {/* Description */}
             {description && (
-              <p className="text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{
+              <p className="text-sm sm:text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{
                 color: '#666',
                 fontFamily: "'Inter', sans-serif",
                 lineHeight: '1.6'
@@ -69,11 +70,12 @@ const Card = ({ title, icon, image, link, description, index }) => {
             {/* Button */}
             <button
               onClick={handleButtonClick}
-              className="service-card-btn w-full mt-auto py-3.5 px-6 rounded-lg text-sm font-semibold transition-all duration-300 relative overflow-hidden group/btn"
+              className="service-card-btn w-full mt-auto py-2.5 sm:py-3.5 px-3 sm:px-6 rounded-lg text-[11px] sm:text-sm font-bold transition-all duration-300 relative overflow-hidden group/btn flex items-center justify-center text-center"
               style={{
                 background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                 color: '#ffffff',
-                boxShadow: '0 2px 8px rgba(64, 152, 145, 0.2)'
+                boxShadow: '0 2px 8px rgba(64, 152, 145, 0.2)',
+                minHeight: '46px'
               }}
               onMouseEnter={(e) => {
                 e.target.style.boxShadow = '0 4px 16px rgba(64, 152, 145, 0.35)'
@@ -84,7 +86,7 @@ const Card = ({ title, icon, image, link, description, index }) => {
                 e.target.style.transform = 'translateY(0)'
               }}
             >
-              <span className="relative z-10 inline-block transition-transform duration-300 group-hover/btn:translate-x-1">
+              <span className="relative z-10 block leading-tight">
                 {description || title}
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
@@ -98,17 +100,19 @@ const Card = ({ title, icon, image, link, description, index }) => {
             </div>
 
             {/* Title */}
-            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{
+            <h3 className="text-[17px] sm:text-2xl font-bold mb-3 transition-all duration-300 leading-tight text-center sm:text-left h-12 sm:h-auto flex items-center justify-center sm:justify-start" style={{
               color: '#1a1a1a',
               fontFamily: "'Inter', sans-serif",
-              letterSpacing: '-0.02em'
+              letterSpacing: '-0.01em',
+              wordBreak: 'break-word',
+              overflow: 'hidden'
             }}>
               {title}
             </h3>
 
             {/* Description */}
             {description && (
-              <p className="text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{
+              <p className="text-sm sm:text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{
                 color: '#666',
                 fontFamily: "'Inter', sans-serif",
                 lineHeight: '1.6'
@@ -120,11 +124,12 @@ const Card = ({ title, icon, image, link, description, index }) => {
             {/* Button */}
             <button
               onClick={handleButtonClick}
-              className="service-card-btn w-full mt-auto py-3.5 px-6 rounded-lg text-sm font-semibold transition-all duration-300 relative overflow-hidden group/btn"
+              className="service-card-btn w-full mt-auto py-2.5 sm:py-3.5 px-3 sm:px-6 rounded-lg text-[11px] sm:text-sm font-bold transition-all duration-300 relative overflow-hidden group/btn flex items-center justify-center text-center"
               style={{
                 background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                 color: '#ffffff',
-                boxShadow: '0 2px 8px rgba(64, 152, 145, 0.2)'
+                boxShadow: '0 2px 8px rgba(64, 152, 145, 0.2)',
+                minHeight: '46px'
               }}
               onMouseEnter={(e) => {
                 e.target.style.boxShadow = '0 4px 16px rgba(64, 152, 145, 0.35)'
@@ -135,7 +140,7 @@ const Card = ({ title, icon, image, link, description, index }) => {
                 e.target.style.transform = 'translateY(0)'
               }}
             >
-              <span className="relative z-10 inline-block transition-transform duration-300 group-hover/btn:translate-x-1">
+              <span className="relative z-10 block leading-tight">
                 {description || title}
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>

@@ -11,7 +11,7 @@ const StudentInternshipPage = () => {
   const navigate = useNavigate()
   const [view, setView] = useState('subcategories') // 'subcategories', 'form'
   const [selectedSubCategory, setSelectedSubCategory] = useState('')
-  
+
   const [formData, setFormData] = useState({
     date: getTodayDate(),
     category: '',
@@ -73,8 +73,8 @@ const StudentInternshipPage = () => {
   ]
 
   const internshipSubCategories = [
-    { 
-      id: 'academic-mandatory-internships', 
+    {
+      id: 'academic-mandatory-internships',
       label: 'Academic Mandatory internships',
       image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -85,12 +85,12 @@ const StudentInternshipPage = () => {
               <stop offset="100%" stopColor="#764BA2" />
             </linearGradient>
           </defs>
-          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#academicGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#academicGradient)" fillOpacity="0.1"/>
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#academicGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#academicGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
-    { 
-      id: 'college-final-year-students', 
+    {
+      id: 'college-final-year-students',
       label: 'College final-year students',
       image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1200&h=1200&fit=crop&q=90&auto=format',
       icon: (
@@ -101,13 +101,13 @@ const StudentInternshipPage = () => {
               <stop offset="100%" stopColor="#F5576C" />
             </linearGradient>
           </defs>
-          <path d="M12 14l9-5-9-5-9 5 9 5z" stroke="url(#collegeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#collegeGradient)" fillOpacity="0.2"/>
-          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" stroke="url(#collegeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#collegeGradient)" fillOpacity="0.1"/>
+          <path d="M12 14l9-5-9-5-9 5 9 5z" stroke="url(#collegeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#collegeGradient)" fillOpacity="0.2" />
+          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" stroke="url(#collegeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#collegeGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
-    { 
-      id: 'freshers-need-training-placement', 
+    {
+      id: 'freshers-need-training-placement',
       label: 'Freshers need training & placement',
       image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -118,8 +118,8 @@ const StudentInternshipPage = () => {
               <stop offset="100%" stopColor="#44A08D" />
             </linearGradient>
           </defs>
-          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#fresherGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#fresherGradient)" fillOpacity="0.1"/>
-          <circle cx="12" cy="12" r="2" fill="url(#fresherGradient)" fillOpacity="0.3"/>
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#fresherGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#fresherGradient)" fillOpacity="0.1" />
+          <circle cx="12" cy="12" r="2" fill="url(#fresherGradient)" fillOpacity="0.3" />
         </svg>
       )
     }
@@ -146,19 +146,19 @@ const StudentInternshipPage = () => {
 
   const calculateAge = (dateOfBirth) => {
     if (!dateOfBirth) return ''
-    
+
     const today = new Date()
     const birthDate = new Date(dateOfBirth)
-    
+
     if (isNaN(birthDate.getTime())) return ''
-    
+
     let age = today.getFullYear() - birthDate.getFullYear()
     const monthDiff = today.getMonth() - birthDate.getMonth()
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--
     }
-    
+
     return age > 0 ? age.toString() : ''
   }
 
@@ -166,16 +166,16 @@ const StudentInternshipPage = () => {
     const { name, value } = e.target
     setFormData(prev => {
       const updatedData = {
-      ...prev,
-      [name]: value
+        ...prev,
+        [name]: value
       }
-      
+
       // Auto-calculate age when dob changes
       if (name === 'dob') {
         const calculatedAge = calculateAge(value)
         updatedData.age = calculatedAge
       }
-      
+
       return updatedData
     })
     if (errors[name]) {
@@ -272,7 +272,7 @@ const StudentInternshipPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
@@ -283,19 +283,19 @@ const StudentInternshipPage = () => {
       // Prepare submission data with "Others" text if applicable
       const submissionData = {
         ...formData,
-        department: formData.department === 'others' 
-          ? `Others: ${formData.departmentOthers}` 
+        department: formData.department === 'others'
+          ? `Others: ${formData.departmentOthers}`
           : formData.department,
-        internshipDomain: formData.internshipDomain === 'others' 
-          ? `Others: ${formData.internshipDomainOthers}` 
+        internshipDomain: formData.internshipDomain === 'others'
+          ? `Others: ${formData.internshipDomainOthers}`
           : formData.internshipDomain
       }
       await submitStudentInternshipApplication(submissionData)
-      navigate('/success', { 
-        state: { 
+      navigate('/success', {
+        state: {
           formType: 'Internship Applicants Application',
           title: 'Internship Applicants Application Submitted Successfully!'
-        } 
+        }
       })
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -308,7 +308,18 @@ const StudentInternshipPage = () => {
   // Sub-Categories View
   if (view === 'subcategories') {
     return (
-      <div className="container-custom py-6 md:py-8 lg:py-12">
+      <div className="container-custom py-6 md:py-8 lg:py-12 relative">
+        {/* Mobile Floating Back Button */}
+        <button
+          onClick={() => navigate('/')}
+          className="lg:hidden fixed top-4 left-4 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-[#409891] text-white shadow-lg active:scale-95 transition-all duration-200"
+          aria-label="Go back"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-10 px-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-3" style={{ color: '#1F2937' }}>
@@ -329,7 +340,7 @@ const StudentInternshipPage = () => {
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
               >
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
                     backgroundImage: `url(${subCategory.image})`,
@@ -339,10 +350,10 @@ const StudentInternshipPage = () => {
                     filter: 'blur(2px)'
                   }}
                 />
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
-                    background: subCategory.id === 'college-final-year-students' 
+                    background: subCategory.id === 'college-final-year-students'
                       ? 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25))'
                       : 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6))'
                   }}
@@ -355,7 +366,7 @@ const StudentInternshipPage = () => {
                     {subCategory.label}
                   </h3>
                 </div>
-                <div 
+                <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                   style={{
                     background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'
@@ -443,43 +454,43 @@ const StudentInternshipPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-            <FormInput
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={errors.email}
-              required
-              placeholder="example@email.com"
-            />
+                <FormInput
+                  label="Email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  error={errors.email}
+                  required
+                  placeholder="example@email.com"
+                />
               </div>
               <div>
-            <FormInput
+                <FormInput
                   label="Contact Number"
                   type="tel"
                   name="contactNumber"
                   value={formData.contactNumber}
-              onChange={handleChange}
+                  onChange={handleChange}
                   error={errors.contactNumber}
-              required
+                  required
                   placeholder="Enter contact number"
-            />
+                />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-            <FormInput
-              label="D.O.B"
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              error={errors.dob}
-              required
-              max={new Date().toISOString().split('T')[0]}
-            />
+                <FormInput
+                  label="D.O.B"
+                  type="date"
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  error={errors.dob}
+                  required
+                  max={new Date().toISOString().split('T')[0]}
+                />
               </div>
               <div>
                 <FormInput
@@ -512,15 +523,15 @@ const StudentInternshipPage = () => {
                 />
               </div>
               <div>
-            <FormSelect
-              label="Gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              options={genderOptions}
-              error={errors.gender}
-              required
-            />
+                <FormSelect
+                  label="Gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  options={genderOptions}
+                  error={errors.gender}
+                  required
+                />
               </div>
             </div>
 
@@ -569,38 +580,38 @@ const StudentInternshipPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-            <FormSelect
-              label="Internship Domain"
-              name="internshipDomain"
-              value={formData.internshipDomain}
-              onChange={handleChange}
-              options={internshipDomainOptions}
-              error={errors.internshipDomain}
-              required
-            />
-            {formData.internshipDomain === 'others' && (
-              <FormInput
-                label="Please specify"
-                type="text"
-                name="internshipDomainOthers"
-                value={formData.internshipDomainOthers}
-                onChange={handleChange}
-                error={errors.internshipDomainOthers}
-                required
-                placeholder="Enter internship domain"
-              />
-            )}
+                <FormSelect
+                  label="Internship Domain"
+                  name="internshipDomain"
+                  value={formData.internshipDomain}
+                  onChange={handleChange}
+                  options={internshipDomainOptions}
+                  error={errors.internshipDomain}
+                  required
+                />
+                {formData.internshipDomain === 'others' && (
+                  <FormInput
+                    label="Please specify"
+                    type="text"
+                    name="internshipDomainOthers"
+                    value={formData.internshipDomainOthers}
+                    onChange={handleChange}
+                    error={errors.internshipDomainOthers}
+                    required
+                    placeholder="Enter internship domain"
+                  />
+                )}
               </div>
               <div>
-            <FormSelect
-              label="Duration"
-              name="duration"
-              value={formData.duration}
-              onChange={handleChange}
-              options={durationOptions}
-              error={errors.duration}
-              required
-            />
+                <FormSelect
+                  label="Duration"
+                  name="duration"
+                  value={formData.duration}
+                  onChange={handleChange}
+                  options={durationOptions}
+                  error={errors.duration}
+                  required
+                />
               </div>
             </div>
 

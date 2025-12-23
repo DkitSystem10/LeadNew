@@ -11,7 +11,7 @@ const JobSeekerPage = () => {
   const navigate = useNavigate()
   const [view, setView] = useState('subcategories') // 'subcategories', 'form'
   const [selectedSubCategory, setSelectedSubCategory] = useState('')
-  
+
   const [formData, setFormData] = useState({
     date: getTodayDate(),
     category: '',
@@ -76,8 +76,8 @@ const JobSeekerPage = () => {
   ]
 
   const jobSubCategories = [
-    { 
-      id: 'full-time-jobs', 
+    {
+      id: 'full-time-jobs',
       label: 'Full-time jobs',
       image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -88,12 +88,12 @@ const JobSeekerPage = () => {
               <stop offset="100%" stopColor="#764BA2" />
             </linearGradient>
           </defs>
-          <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#fulltimeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#fulltimeGradient)" fillOpacity="0.1"/>
+          <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#fulltimeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#fulltimeGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
-    { 
-      id: 'part-time-jobs', 
+    {
+      id: 'part-time-jobs',
       label: 'Part-time jobs',
       image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -104,13 +104,13 @@ const JobSeekerPage = () => {
               <stop offset="100%" stopColor="#F5576C" />
             </linearGradient>
           </defs>
-          <circle cx="12" cy="12" r="10" stroke="url(#parttimeGradient)" strokeWidth="2" fill="url(#parttimeGradient)" fillOpacity="0.1"/>
-          <path d="M12 6v6l4 2" stroke="url(#parttimeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="12" cy="12" r="10" stroke="url(#parttimeGradient)" strokeWidth="2" fill="url(#parttimeGradient)" fillOpacity="0.1" />
+          <path d="M12 6v6l4 2" stroke="url(#parttimeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       )
     },
-    { 
-      id: 'freelancers', 
+    {
+      id: 'freelancers',
       label: 'Freelancers',
       image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -121,14 +121,14 @@ const JobSeekerPage = () => {
               <stop offset="100%" stopColor="#44A08D" />
             </linearGradient>
           </defs>
-          <rect x="2" y="3" width="20" height="14" rx="2" stroke="url(#freelancerGradient)" strokeWidth="2" fill="url(#freelancerGradient)" fillOpacity="0.1"/>
-          <path d="M8 21h8M12 17v4" stroke="url(#freelancerGradient)" strokeWidth="2" strokeLinecap="round"/>
-          <circle cx="12" cy="10" r="2" fill="url(#freelancerGradient)" fillOpacity="0.3"/>
+          <rect x="2" y="3" width="20" height="14" rx="2" stroke="url(#freelancerGradient)" strokeWidth="2" fill="url(#freelancerGradient)" fillOpacity="0.1" />
+          <path d="M8 21h8M12 17v4" stroke="url(#freelancerGradient)" strokeWidth="2" strokeLinecap="round" />
+          <circle cx="12" cy="10" r="2" fill="url(#freelancerGradient)" fillOpacity="0.3" />
         </svg>
       )
     },
-    { 
-      id: 'contract-based', 
+    {
+      id: 'contract-based',
       label: 'Contract-based',
       image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -139,8 +139,8 @@ const JobSeekerPage = () => {
               <stop offset="100%" stopColor="#FEE140" />
             </linearGradient>
           </defs>
-          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="url(#contractGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#contractGradient)" fillOpacity="0.1"/>
-          <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="url(#contractGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="url(#contractGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#contractGradient)" fillOpacity="0.1" />
+          <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="url(#contractGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       )
     }
@@ -167,19 +167,19 @@ const JobSeekerPage = () => {
 
   const calculateAge = (dateOfBirth) => {
     if (!dateOfBirth) return ''
-    
+
     const today = new Date()
     const birthDate = new Date(dateOfBirth)
-    
+
     if (isNaN(birthDate.getTime())) return ''
-    
+
     let age = today.getFullYear() - birthDate.getFullYear()
     const monthDiff = today.getMonth() - birthDate.getMonth()
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--
     }
-    
+
     return age > 0 ? age.toString() : ''
   }
 
@@ -190,13 +190,13 @@ const JobSeekerPage = () => {
         ...prev,
         [name]: value
       }
-      
+
       // Auto-calculate age when dob changes
       if (name === 'dob') {
         const calculatedAge = calculateAge(value)
         updatedData.age = calculatedAge
       }
-      
+
       return updatedData
     })
     if (errors[name]) {
@@ -284,7 +284,7 @@ const JobSeekerPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
@@ -295,16 +295,16 @@ const JobSeekerPage = () => {
       // Prepare submission data with "Others" text if applicable
       const submissionData = {
         ...formData,
-        department: formData.department === 'others' 
-          ? `Others: ${formData.departmentOthers}` 
+        department: formData.department === 'others'
+          ? `Others: ${formData.departmentOthers}`
           : formData.department
       }
       await submitJobSeekerApplication(submissionData)
-      navigate('/success', { 
-        state: { 
+      navigate('/success', {
+        state: {
           formType: 'Job Seeker Application',
           title: 'Job Seeker Application Submitted Successfully!'
-        } 
+        }
       })
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -317,7 +317,18 @@ const JobSeekerPage = () => {
   // Sub-Categories View
   if (view === 'subcategories') {
     return (
-      <div className="container-custom py-6 md:py-8 lg:py-12">
+      <div className="container-custom py-6 md:py-8 lg:py-12 relative">
+        {/* Mobile Floating Back Button */}
+        <button
+          onClick={() => navigate('/')}
+          className="lg:hidden fixed top-4 left-4 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-[#409891] text-white shadow-lg active:scale-95 transition-all duration-200"
+          aria-label="Go back"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-10 px-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-3" style={{ color: '#1F2937' }}>
@@ -338,7 +349,7 @@ const JobSeekerPage = () => {
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
               >
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
                     backgroundImage: `url(${subCategory.image})`,
@@ -357,7 +368,7 @@ const JobSeekerPage = () => {
                     {subCategory.label}
                   </h3>
                 </div>
-                <div 
+                <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                   style={{
                     background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'
