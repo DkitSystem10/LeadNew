@@ -10,7 +10,7 @@ const PartnersPage = () => {
   const navigate = useNavigate()
   const [view, setView] = useState('subcategories') // 'subcategories', 'form'
   const [selectedSubCategory, setSelectedSubCategory] = useState('')
-  
+
   const [formData, setFormData] = useState({
     date: getTodayDate(),
     category: '',
@@ -27,8 +27,8 @@ const PartnersPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const partnerSubCategories = [
-    { 
-      id: 'schools-colleges', 
+    {
+      id: 'schools-colleges',
       label: 'Schools / Colleges',
       image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1200&h=1200&fit=crop&q=90&auto=format',
       icon: (
@@ -39,13 +39,13 @@ const PartnersPage = () => {
               <stop offset="100%" stopColor="#764BA2" />
             </linearGradient>
           </defs>
-          <path d="M12 14l9-5-9-5-9 5 9 5z" stroke="url(#schoolGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#schoolGradient)" fillOpacity="0.2"/>
-          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" stroke="url(#schoolGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#schoolGradient)" fillOpacity="0.1"/>
+          <path d="M12 14l9-5-9-5-9 5 9 5z" stroke="url(#schoolGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#schoolGradient)" fillOpacity="0.2" />
+          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" stroke="url(#schoolGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#schoolGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
-    { 
-      id: 'corporate-companies', 
+    {
+      id: 'corporate-companies',
       label: 'Corporate Companies',
       image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -56,12 +56,12 @@ const PartnersPage = () => {
               <stop offset="100%" stopColor="#FF8E53" />
             </linearGradient>
           </defs>
-          <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke="url(#corporateGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#corporateGradient)" fillOpacity="0.1"/>
+          <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke="url(#corporateGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#corporateGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
-    { 
-      id: 'franchise-enquiries', 
+    {
+      id: 'franchise-enquiries',
       label: 'Franchise Enquiries',
       image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -72,17 +72,17 @@ const PartnersPage = () => {
               <stop offset="100%" stopColor="#44A08D" />
             </linearGradient>
           </defs>
-          <circle cx="12" cy="12" r="3" stroke="url(#franchiseGradient)" strokeWidth="2" fill="url(#franchiseGradient)" fillOpacity="0.3"/>
-          <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1" stroke="url(#franchiseGradient)" strokeWidth="2" strokeLinecap="round"/>
-          <circle cx="12" cy="3" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6"/>
-          <circle cx="12" cy="21" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6"/>
-          <circle cx="3" cy="12" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6"/>
-          <circle cx="21" cy="12" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6"/>
+          <circle cx="12" cy="12" r="3" stroke="url(#franchiseGradient)" strokeWidth="2" fill="url(#franchiseGradient)" fillOpacity="0.3" />
+          <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1" stroke="url(#franchiseGradient)" strokeWidth="2" strokeLinecap="round" />
+          <circle cx="12" cy="3" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6" />
+          <circle cx="12" cy="21" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6" />
+          <circle cx="3" cy="12" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6" />
+          <circle cx="21" cy="12" r="1.5" fill="url(#franchiseGradient)" fillOpacity="0.6" />
         </svg>
       )
     },
-    { 
-      id: 'media-press-contacts', 
+    {
+      id: 'media-press-contacts',
       label: 'Media / Press Contacts',
       image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -93,12 +93,12 @@ const PartnersPage = () => {
               <stop offset="100%" stopColor="#F5576C" />
             </linearGradient>
           </defs>
-          <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" stroke="url(#mediaGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#mediaGradient)" fillOpacity="0.1"/>
+          <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" stroke="url(#mediaGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#mediaGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
-    { 
-      id: 'investors-csr', 
+    {
+      id: 'investors-csr',
       label: 'Investors / CSR',
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=1200&fit=crop&q=80',
       icon: (
@@ -109,7 +109,7 @@ const PartnersPage = () => {
               <stop offset="100%" stopColor="#FEE140" />
             </linearGradient>
           </defs>
-          <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke="url(#investorGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#investorGradient)" fillOpacity="0.1"/>
+          <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke="url(#investorGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#investorGradient)" fillOpacity="0.1" />
         </svg>
       )
     }
@@ -136,6 +136,13 @@ const PartnersPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+
+    // Phone number validation: allow only digits and max 10 chars
+    if (name === 'phoneNumber') {
+      if (!/^\d*$/.test(value)) return // Allow only digits
+      if (value.length > 10) return // Max 10 digits
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -195,7 +202,7 @@ const PartnersPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
@@ -204,12 +211,12 @@ const PartnersPage = () => {
 
     try {
       await submitPartnersApplication(formData)
-      
-      navigate('/success', { 
-        state: { 
+
+      navigate('/success', {
+        state: {
           formType: 'Partners Application',
           title: 'Partners Application Submitted Successfully!'
-        } 
+        }
       })
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -243,7 +250,7 @@ const PartnersPage = () => {
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
               >
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
                     backgroundImage: `url(${subCategory.image})`,
@@ -253,10 +260,10 @@ const PartnersPage = () => {
                     filter: 'blur(2px)'
                   }}
                 />
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
-                    background: subCategory.id === 'schools-colleges' 
+                    background: subCategory.id === 'schools-colleges'
                       ? 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25))'
                       : 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6))'
                   }}
@@ -269,7 +276,7 @@ const PartnersPage = () => {
                     {subCategory.label}
                   </h3>
                 </div>
-                <div 
+                <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                   style={{
                     background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'

@@ -370,6 +370,13 @@ const CareerGuidancePage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+
+    // Phone number validation: allow only digits and max 10 chars
+    if (name === 'contactNumber' || name === 'parentContactNumber' || name === 'phoneNumber') {
+      if (!/^\d*$/.test(value)) return // Allow only digits
+      if (value.length > 10) return // Max 10 digits
+    }
+
     setFormData(prev => {
       const updatedData = {
         ...prev,

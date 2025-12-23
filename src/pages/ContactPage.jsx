@@ -13,9 +13,17 @@ const ContactPage = () => {
   const [submitStatus, setSubmitStatus] = useState(null)
 
   const handleChange = (e) => {
+    const { name, value } = e.target
+
+    // Restricted to 10 digits and only numbers for phone field
+    if (name === 'phone') {
+      if (!/^\d*$/.test(value)) return
+      if (value.length > 10) return
+    }
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     })
   }
 
@@ -45,12 +53,12 @@ const ContactPage = () => {
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light mb-6 tracking-tight" style={{ 
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light mb-6 tracking-tight" style={{
               color: '#1a1a1a',
               fontFamily: "'Cormorant Garamond', serif",
               letterSpacing: '0.02em'
             }}>
-              Get In <span style={{ 
+              Get In <span style={{
                 background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -58,10 +66,10 @@ const ContactPage = () => {
                 fontWeight: '600'
               }}>Touch</span>
             </h1>
-            <div className="w-24 h-px mx-auto mb-10" style={{ 
+            <div className="w-24 h-px mx-auto mb-10" style={{
               background: 'linear-gradient(to right, transparent, #409891, #48ADB7, #409891, transparent)'
             }}></div>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-normal" style={{ 
+            <p className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-normal" style={{
               color: '#666',
               fontFamily: "'Inter', sans-serif",
               letterSpacing: '-0.01em'
@@ -76,14 +84,14 @@ const ContactPage = () => {
               <div className="bg-white rounded-2xl p-8 lg:p-10" style={{
                 boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04)'
               }}>
-                <h2 className="text-3xl font-semibold mb-6" style={{ 
+                <h2 className="text-3xl font-semibold mb-6" style={{
                   color: '#1a1a1a',
                   fontFamily: "'Inter', sans-serif",
                   letterSpacing: '-0.02em'
                 }}>
                   Send us a Message
                 </h2>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2" style={{ color: '#333' }}>
@@ -252,7 +260,7 @@ const ContactPage = () => {
                     disabled={isSubmitting}
                     className="w-full py-3.5 px-6 rounded-lg text-sm font-semibold text-white transition-all duration-300 relative overflow-hidden"
                     style={{
-                      background: isSubmitting 
+                      background: isSubmitting
                         ? 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'
                         : 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                       boxShadow: '0 2px 8px rgba(64, 152, 145, 0.2)',
@@ -282,7 +290,7 @@ const ContactPage = () => {
               <div className="bg-white rounded-2xl p-8 lg:p-10" style={{
                 boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04)'
               }}>
-                <h2 className="text-3xl font-semibold mb-8" style={{ 
+                <h2 className="text-3xl font-semibold mb-8" style={{
                   color: '#1a1a1a',
                   fontFamily: "'Inter', sans-serif",
                   letterSpacing: '-0.02em'
