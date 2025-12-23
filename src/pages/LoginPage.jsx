@@ -379,6 +379,21 @@ const LoginPage = () => {
             </button>
           </form>
 
+          {/* Test Credentials Hint */}
+          <div className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Demo Credentials</p>
+            <div className="flex gap-4">
+              <div className="text-center">
+                <span className="block text-[10px] text-gray-400 font-medium">USER ID</span>
+                <span className="text-sm font-mono text-[#409891] bg-white px-2 py-0.5 rounded border border-gray-100">Lead_admin</span>
+              </div>
+              <div className="text-center">
+                <span className="block text-[10px] text-gray-400 font-medium">PASSWORD</span>
+                <span className="text-sm font-mono text-[#409891] bg-white px-2 py-0.5 rounded border border-gray-100">Lead@123</span>
+              </div>
+            </div>
+          </div>
+
             {/* Footer */}
             <div className="mt-8 pt-6 border-t border-gray-200 text-center">
               <p className="text-xs sm:text-sm text-gray-500 font-medium">

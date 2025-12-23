@@ -14,58 +14,58 @@ const Card = ({ title, icon, image, link, description, index }) => {
       transform: 'perspective(1000px) translateZ(0)',
       transformStyle: 'preserve-3d'
     }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.transform = 'perspective(1000px) translateZ(20px) rotateX(2deg) rotateY(-2deg)'
-      e.currentTarget.style.boxShadow = '0 20px 60px rgba(64, 152, 145, 0.4), 0 10px 30px rgba(72, 173, 183, 0.3), 0 0 0 1px rgba(64, 152, 145, 0.2)'
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.transform = 'perspective(1000px) translateZ(0)'
-      e.currentTarget.style.boxShadow = '0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04)'
-    }}>
-      
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'perspective(1000px) translateZ(20px) rotateX(2deg) rotateY(-2deg)'
+        e.currentTarget.style.boxShadow = '0 20px 60px rgba(64, 152, 145, 0.4), 0 10px 30px rgba(72, 173, 183, 0.3), 0 0 0 1px rgba(64, 152, 145, 0.2)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'perspective(1000px) translateZ(0)'
+        e.currentTarget.style.boxShadow = '0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04)'
+      }}>
+
       <div className="flex flex-col h-full relative z-10 p-8">
         {image ? (
           <>
             {/* Image Container */}
-            <div className="w-full flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 transition-all duration-500 group-hover:shadow-lg" style={{ 
+            <div className="w-full flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-gray-50 transition-all duration-500 group-hover:shadow-md" style={{
               height: '220px',
               border: '1px solid rgba(0, 0, 0, 0.05)'
             }}>
-              <div className="relative w-full h-full overflow-hidden">
-                <img 
-                  src={image} 
+              <div className="relative w-full h-full overflow-hidden p-4">
+                <img
+                  src={image}
                   alt={title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  style={{ 
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
+                    objectFit: 'contain',
                     objectPosition: 'center'
                   }}
                 />
               </div>
-          </div>
-            
+            </div>
+
             {/* Title */}
-            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{ 
+            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{
               color: '#1a1a1a',
               fontFamily: "'Inter', sans-serif",
               letterSpacing: '-0.02em'
             }}>
-            {title}
-          </h3>
-            
+              {title}
+            </h3>
+
             {/* Description */}
-          {description && (
-              <p className="text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{ 
+            {description && (
+              <p className="text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{
                 color: '#666',
                 fontFamily: "'Inter', sans-serif",
                 lineHeight: '1.6'
               }}>
-              {description}
-            </p>
-          )}
-            
+                {description}
+              </p>
+            )}
+
             {/* Button */}
             <button
               onClick={handleButtonClick}
@@ -95,20 +95,20 @@ const Card = ({ title, icon, image, link, description, index }) => {
             {/* Icon */}
             <div className="mb-6 transition-all duration-500 group-hover:scale-110 flex items-center justify-center" style={{ minHeight: '80px' }}>
               <span className="text-6xl transition-all duration-500">{icon}</span>
-        </div>
-            
+            </div>
+
             {/* Title */}
-            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{ 
+            <h3 className="text-2xl font-semibold mb-3 transition-all duration-300 whitespace-nowrap" style={{
               color: '#1a1a1a',
               fontFamily: "'Inter', sans-serif",
               letterSpacing: '-0.02em'
             }}>
               {title}
             </h3>
-            
+
             {/* Description */}
             {description && (
-              <p className="text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{ 
+              <p className="text-base leading-relaxed mb-6 flex-grow transition-all duration-300" style={{
                 color: '#666',
                 fontFamily: "'Inter', sans-serif",
                 lineHeight: '1.6'
@@ -116,7 +116,7 @@ const Card = ({ title, icon, image, link, description, index }) => {
                 {description}
               </p>
             )}
-            
+
             {/* Button */}
             <button
               onClick={handleButtonClick}

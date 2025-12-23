@@ -29,17 +29,19 @@ const Layout = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden max-w-full w-full">
+    <div className={`flex flex-col w-full max-w-full overflow-x-hidden ${isHomePage ? 'min-h-screen' : 'h-screen overflow-hidden'}`}>
       {/* Navbar - Only show on home page for mobile menu toggle */}
       {isHomePage && <Navbar onMenuClick={toggleMobileMenu} />}
-      
+
       {/* Mobile Menu - Only for home page on mobile */}
       {isHomePage && <MobileMenu isOpen={mobileMenuOpen} onClose={closeMobileMenu} />}
-      
-      <div className="flex flex-grow relative w-full max-w-full">
+
+      <div className="flex flex-grow relative w-full max-w-full h-full">
         {/* Sidebar - Always available on mobile, conditional on desktop */}
         <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} showOnDesktop={showSidebar} />
-        <main className={`flex-grow w-full ${showSidebar ? 'lg:ml-64 xl:ml-64' : ''} lg:w-auto overflow-x-hidden max-w-full overflow-y-auto ${isHomePage || isContactPage ? 'bg-white' : 'bg-[#F5F7FA]'}`} style={{ height: 'calc(100vh - 56px)', marginTop: isHomePage ? '56px' : '0' }}>
+        <main
+          className={`flex-grow w-full ${showSidebar ? 'lg:ml-64 xl:ml-64' : ''} lg:w-auto overflow-x-hidden max-w-full ${isHomePage || isContactPage ? 'bg-white' : 'bg-[#F5F7FA] h-full overflow-y-auto'}`}
+        >
           {children}
         </main>
       </div>

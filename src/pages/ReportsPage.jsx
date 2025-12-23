@@ -65,33 +65,49 @@ const ReportsPage = () => {
         jobSeekersResult,
         studentInternshipsResult,
         courseEnquiriesResult,
-        careerGuidanceResult,
+        // careerGuidanceResult, // Removed: Fetching specialized tables instead
         b2bResult,
         vendorCategoryData,
         partnersCategoryData,
         jobSeekersCategoryData,
         studentInternshipsCategoryData,
         courseEnquiriesCategoryData,
-        careerGuidanceCategoryData
+        // careerGuidanceCategoryData, // Removed: Not used for specialized tables
+
+        // New specialized tables for Career Guidance
+        studentCareerResult,
+        suitabilityTestResult,
+        studyAbroadResult,
+        roadmapSchoolResult,
+        roadmapCollegeResult,
+        roadmapProfessionalResult
       ] = await Promise.all([
         supabase.from('vendor_applications').select('id', { count: 'exact', head: true }),
         supabase.from('partner').select('id', { count: 'exact', head: true }),
         supabase.from('job_seeker_applications').select('id', { count: 'exact', head: true }),
         supabase.from('student_internship_applications').select('id', { count: 'exact', head: true }),
         supabase.from('course_enquiry_registrations').select('id', { count: 'exact', head: true }),
-        supabase.from('career_guidance_applications').select('id', { count: 'exact', head: true }),
+        // supabase.from('career_guidance_applications').select('id', { count: 'exact', head: true }),
         supabase.from('b2b_applications').select('id', { count: 'exact', head: true }),
         supabase.from('vendor_applications').select('category'),
         supabase.from('partner').select('category'),
         supabase.from('job_seeker_applications').select('category'),
         supabase.from('student_internship_applications').select('category'),
         supabase.from('course_enquiry_registrations').select('category, sub_category'),
-        supabase.from('career_guidance_applications').select('category')
+        // supabase.from('career_guidance_applications').select('category'),
+
+        // Fetch counts for specialized Career Guidance tables
+        supabase.from('student_career_counselling').select('id', { count: 'exact', head: true }),
+        supabase.from('suitability_test_applications').select('id', { count: 'exact', head: true }),
+        supabase.from('study_abroad_guidance_applications').select('id', { count: 'exact', head: true }),
+        supabase.from('roadmap_school_student_applications').select('id', { count: 'exact', head: true }),
+        supabase.from('roadmap_college_student_applications').select('id', { count: 'exact', head: true }),
+        supabase.from('roadmap_professional_applications').select('id', { count: 'exact', head: true })
       ])
 
       // Combine vendors and B2B
-      const vendorsCount = vendorsResult.count || 0
-      const b2bCount = b2bResult.count || 0
+      const vendorsCount = (vendorsResult.count || 0)
+      const b2bCount = (b2bResult.count || 0)
       const combinedVendors = vendorsCount + b2bCount
 
       // Helper function to calculate category stats
@@ -99,7 +115,7 @@ const ReportsPage = () => {
         const categoryMap = new Map()
         if (data && data.data) {
           data.data.forEach(item => {
-            const category = useSubCategory 
+            const category = useSubCategory
               ? (item.sub_category || item.category || 'Uncategorized')
               : (item.category || 'Uncategorized')
             categoryMap.set(category, (categoryMap.get(category) || 0) + 1)
@@ -121,7 +137,18 @@ const ReportsPage = () => {
       const jobSeekersStats = calculateCategoryStats(jobSeekersCategoryData)
       const studentInternshipsStats = calculateCategoryStats(studentInternshipsCategoryData)
       const courseEnquiriesStats = calculateCategoryStats(courseEnquiriesCategoryData, true) // Use sub_category
-      const careerGuidanceStats = calculateCategoryStats(careerGuidanceCategoryData)
+
+      // Construct Career Guidance Stats from specialized tables
+      const careerGuidanceStats = [
+        { category: 'Student Career Counselling', count: studentCareerResult.count || 0 },
+        { category: 'Suitability Test', count: suitabilityTestResult.count || 0 },
+        { category: 'Study Abroad Guidance', count: studyAbroadResult.count || 0 },
+        { category: '15 Years Roadmap (School)', count: roadmapSchoolResult.count || 0 },
+        { category: '15 Years Roadmap (College)', count: roadmapCollegeResult.count || 0 },
+        { category: '15 Years Roadmap (Professional)', count: roadmapProfessionalResult.count || 0 }
+      ].filter(item => item.count > 0).sort((a, b) => b.count - a.count)
+
+      const careerGuidanceTotal = careerGuidanceStats.reduce((acc, curr) => acc + curr.count, 0)
 
       setCategoryStats({
         vendors: vendorStats,
@@ -138,16 +165,16 @@ const ReportsPage = () => {
         jobSeekers: jobSeekersResult.count || 0,
         studentInternships: studentInternshipsResult.count || 0,
         courseEnquiries: courseEnquiriesResult.count || 0,
-        careerGuidance: careerGuidanceResult.count || 0,
+        careerGuidance: careerGuidanceTotal,
         total: 0
       }
 
-      newStats.total = 
-        newStats.vendors + 
-        newStats.partners + 
-        newStats.jobSeekers + 
-        newStats.studentInternships + 
-        newStats.courseEnquiries + 
+      newStats.total =
+        newStats.vendors +
+        newStats.partners +
+        newStats.jobSeekers +
+        newStats.studentInternships +
+        newStats.courseEnquiries +
         newStats.careerGuidance
 
       setStats(newStats)
@@ -164,11 +191,11 @@ const ReportsPage = () => {
     try {
       setLoadingDetails(true)
       setError(null)
-      
+
       let tableName = ''
       let query = null
       let useSubCategory = false
-      
+
       // Handle special cases and determine table name
       if (type === 'vendors') {
         if (category === 'B2B Applications') {
@@ -207,23 +234,38 @@ const ReportsPage = () => {
           .or(`category.eq.${category},sub_category.eq.${category}`)
           .order('created_at', { ascending: false })
       } else if (type === 'careerGuidance') {
-        tableName = 'career_guidance_applications'
-        query = supabase.from(tableName)
-          .select('*')
-          .eq('category', category)
-          .order('created_at', { ascending: false })
+        // Route to specialized tables for Career Guidance drill-down
+        if (category === 'Student Career Counselling') {
+          tableName = 'student_career_counselling'
+        } else if (category === 'Suitability Test') {
+          tableName = 'suitability_test_applications'
+        } else if (category === 'Study Abroad Guidance') {
+          tableName = 'study_abroad_guidance_applications'
+        } else if (category === '15 Years Roadmap (School)') {
+          tableName = 'roadmap_school_student_applications'
+        } else if (category === '15 Years Roadmap (College)') {
+          tableName = 'roadmap_college_student_applications'
+        } else if (category === '15 Years Roadmap (Professional)') {
+          tableName = 'roadmap_professional_applications'
+        }
+
+        if (tableName) {
+          query = supabase.from(tableName)
+            .select('*')
+            .order('created_at', { ascending: false })
+        }
       }
-      
+
       if (!query) {
         throw new Error('Invalid category type')
       }
-      
+
       const { data, error: fetchError } = await query
-      
+
       if (fetchError) {
         throw fetchError
       }
-      
+
       setUserDetails(data || [])
       setSelectedCategory({ type, category })
     } catch (err) {
@@ -310,7 +352,7 @@ const ReportsPage = () => {
       }
     } else if (type === 'studentInternships') {
       return {
-        'Student Name': item.student_name,
+        'Student Name': item.student_name || item.full_name, // Handle variation
         'Gender': item.gender,
         'Date of Birth': item.dob,
         'Age': item.age,
@@ -324,80 +366,158 @@ const ReportsPage = () => {
       }
     } else if (type === 'courseEnquiries') {
       return {
-        'Student Name': item.student_name,
+        'Student Name': item.student_name || item.name,
         'Gender': item.gender,
-        'Date of Birth': item.dob,
+        'Date of Birth': item.date_of_birth || item.dob,
         'Age': item.age,
         'Address': item.address,
-        'Contact Number': item.contact_number,
+        'Contact Number': item.contact_number || item.phone_number,
         'Email': item.email,
-        'Qualification': item.qualification,
         'Category': item.category,
         'Sub Category': item.sub_category,
+        'Course Enquiry': item.course_enquiry,
         'Date': item.date,
         'Remarks': item.remarks
       }
     } else if (type === 'careerGuidance') {
-      return {
-        'Name': item.name,
-        'Gender': item.gender,
-        'Date of Birth': item.dob,
-        'Age': item.age,
-        'Address': item.address,
-        'Contact Number': item.contact_number,
-        'Email': item.email,
-        'Qualification': item.qualification,
-        'Date': item.date,
-        'Remarks': item.remarks
+      // Dynamic rendering for various career guidance tables
+      if (item.student_name && item.current_class_year) {
+        // Student Career Counselling
+        return {
+          'Student Name': item.student_name,
+          'Age': item.age,
+          'Current Class/Year': item.current_class_year,
+          'School/College': item.school_college_name,
+          'City': item.city,
+          'Pincode': item.pincode,
+          'Stream': item.current_stream_subjects,
+          'Result': item.last_exam_result,
+          'Goal': item.has_career_goal,
+          'Confusion': item.biggest_confusion,
+          'Date': new Date(item.created_at).toLocaleDateString()
+        }
+      } else if (item.candidate_name) {
+        // Suitability Test
+        return {
+          'Candidate Name': item.candidate_name,
+          'Age': item.age,
+          'Education': item.education_level,
+          'City': item.city,
+          'Pincode': item.pincode,
+          'Well At': item.subjects_well_performing,
+          'Enjoys': item.activities_enjoy_most,
+          'Logic': item.logic_solving,
+          'Date': new Date(item.created_at).toLocaleDateString()
+        }
+      } else if (item.preferred_countries) {
+        // Study Abroad
+        return {
+          'Student Name': item.student_name,
+          'Age': item.age,
+          'Qualification': item.current_qualification,
+          'City': item.city,
+          'Pincode': item.pincode,
+          'Countries': item.preferred_countries,
+          'Study Level': item.intended_study_level,
+          'Budget': item.budget_range,
+          'Date': new Date(item.created_at).toLocaleDateString()
+        }
+      } else if (item.current_job_role) {
+        // Roadmap Professional
+        return {
+          'Name': item.full_name,
+          'Age': item.age,
+          'Role': item.current_job_role,
+          'Experience': item.total_work_experience,
+          'City': item.city,
+          'Pincode': item.pincode,
+          'Challenge': item.specific_challenge,
+          'Guidance Reason': item.primary_reason_guidance,
+          'Date': new Date(item.created_at).toLocaleDateString()
+        }
+      } else if (item.institution_name) {
+        // Roadmap College
+        return {
+          'Name': item.full_name,
+          'Age': item.age,
+          'Degree': item.degree_course,
+          'Institution': item.institution_name,
+          'City': item.city,
+          'Pincode': item.pincode,
+          'Career Intention': item.career_intention,
+          'Guidance Needed': item.guidance_needed,
+          'Date': new Date(item.created_at).toLocaleDateString()
+        }
+      } else if (item.current_class) {
+        // Roadmap School
+        return {
+          'Name': item.student_name,
+          'Class': item.current_class,
+          'School': item.school_name,
+          'City': item.city,
+          'Pincode': item.pincode,
+          'Parent Purpose': item.parent_concern,
+          'Support Needed': item.support_needed,
+          'Date': new Date(item.created_at).toLocaleDateString()
+        }
+      } else {
+        // Fallback
+        return {
+          'Name': item.name || item.student_name || item.full_name,
+          'Email': item.email,
+          'Phone': item.contact_number || item.phone_number,
+          'City': item.city,
+          'Date': new Date(item.created_at).toLocaleDateString()
+        }
       }
     }
-    return {    }
+    return {}
   }
 
   const categoryInfo = {
-    vendors: { 
-      title: 'Vendors / Suppliers', 
-      count: stats.vendors, 
+    vendors: {
+      title: 'Vendors / Suppliers',
+      count: stats.vendors,
       gradient: 'linear-gradient(to right, #3B82F6, #2563EB)',
       bgGradient: 'linear-gradient(to right, #EFF6FF, #DBEAFE)',
       hoverColor: '#DBEAFE',
       cardColor: '#3B82F6'
     },
-    partners: { 
-      title: 'Partners', 
-      count: stats.partners, 
+    partners: {
+      title: 'Partners',
+      count: stats.partners,
       gradient: 'linear-gradient(to right, #10B981, #059669)',
       bgGradient: 'linear-gradient(to right, #ECFDF5, #D1FAE5)',
       hoverColor: '#D1FAE5',
       cardColor: '#10B981'
     },
-    jobSeekers: { 
-      title: 'Job Seekers', 
-      count: stats.jobSeekers, 
+    jobSeekers: {
+      title: 'Job Seekers',
+      count: stats.jobSeekers,
       gradient: 'linear-gradient(to right, #8B5CF6, #7C3AED)',
       bgGradient: 'linear-gradient(to right, #F5F3FF, #EDE9FE)',
       hoverColor: '#EDE9FE',
       cardColor: '#8B5CF6'
     },
-    studentInternships: { 
-      title: 'Internship Applicants', 
-      count: stats.studentInternships, 
+    studentInternships: {
+      title: 'Internship Applicants',
+      count: stats.studentInternships,
       gradient: 'linear-gradient(to right, #F97316, #EA580C)',
       bgGradient: 'linear-gradient(to right, #FFF7ED, #FFEDD5)',
       hoverColor: '#FFEDD5',
       cardColor: '#F97316'
     },
-    courseEnquiries: { 
-      title: 'Course Enquiry / Registration', 
-      count: stats.courseEnquiries, 
+    courseEnquiries: {
+      title: 'Course Enquiry / Registration',
+      count: stats.courseEnquiries,
       gradient: 'linear-gradient(to right, #EC4899, #DB2777)',
       bgGradient: 'linear-gradient(to right, #FDF2F8, #FCE7F3)',
       hoverColor: '#FCE7F3',
       cardColor: '#EC4899'
     },
-    careerGuidance: { 
-      title: 'Career Guidance', 
-      count: stats.careerGuidance, 
+    careerGuidance: {
+      title: 'Career Guidance',
+      count: stats.careerGuidance,
       gradient: 'linear-gradient(to right, #14B8A6, #0D9488)',
       bgGradient: 'linear-gradient(to right, #F0FDFA, #CCFBF1)',
       hoverColor: '#CCFBF1',
@@ -565,57 +685,56 @@ const ReportsPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4">
           {statCards.map((card, index) => {
             const cardKey = card.title === 'Vendors / Suppliers' ? 'vendors' :
-                          card.title === 'Partners' ? 'partners' :
-                          card.title === 'Job Seekers' ? 'jobSeekers' :
-                          card.title === 'Internship Applicants' ? 'studentInternships' :
-                          card.title === 'Course Enquiry / Registration' ? 'courseEnquiries' :
-                          card.title === 'Career Guidance' ? 'careerGuidance' : null
-            
+              card.title === 'Partners' ? 'partners' :
+                card.title === 'Job Seekers' ? 'jobSeekers' :
+                  card.title === 'Internship Applicants' ? 'studentInternships' :
+                    card.title === 'Course Enquiry / Registration' ? 'courseEnquiries' :
+                      card.title === 'Career Guidance' ? 'careerGuidance' : null
+
             return (
-            <div
-              key={card.title}
-              onClick={() => cardKey && setShowDetails(cardKey)}
-              className={`bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 ${
-                cardKey ? 'cursor-pointer' : ''
-              }`}
-              style={{
-                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
-              }}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-lg bg-gradient-to-r ${card.color} text-white`}>
-                  {card.icon}
+              <div
+                key={card.title}
+                onClick={() => cardKey && setShowDetails(cardKey)}
+                className={`bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 ${cardKey ? 'cursor-pointer' : ''
+                  }`}
+                style={{
+                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                }}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`p-3 rounded-lg bg-gradient-to-r ${card.color} text-white`}>
+                    {card.icon}
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl md:text-3xl font-bold" style={{ color: '#1F2937' }}>
+                      {card.count.toLocaleString()}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-2xl md:text-3xl font-bold" style={{ color: '#1F2937' }}>
-                    {card.count.toLocaleString()}
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm md:text-base font-semibold text-gray-700">
+                    {card.title}
+                  </h3>
+                  {cardKey && (
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </div>
+                <div className="mt-4">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className={`h-2 rounded-full bg-gradient-to-r ${card.color} transition-all duration-500`}
+                      style={{
+                        width: stats.total > 0 ? `${(card.count / stats.total) * 100}%` : '0%'
+                      }}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {stats.total > 0 ? `${((card.count / stats.total) * 100).toFixed(1)}%` : '0%'} of total
                   </p>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm md:text-base font-semibold text-gray-700">
-                  {card.title}
-                </h3>
-                {cardKey && (
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                )}
-              </div>
-              <div className="mt-4">
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className={`h-2 rounded-full bg-gradient-to-r ${card.color} transition-all duration-500`}
-                    style={{
-                      width: stats.total > 0 ? `${(card.count / stats.total) * 100}%` : '0%'
-                    }}
-                  />
-                </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  {stats.total > 0 ? `${((card.count / stats.total) * 100).toFixed(1)}%` : '0%'} of total
-                </p>
-              </div>
-            </div>
             )
           })}
         </div>
@@ -624,7 +743,7 @@ const ReportsPage = () => {
         {showDetails && (() => {
           const info = categoryInfo[showDetails]
           const currentStats = categoryStats[showDetails] || []
-          
+
           return (
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowDetails(null)}>
               <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
@@ -658,7 +777,7 @@ const ReportsPage = () => {
                       </svg>
                     </div>
                   </div>
-                  
+
                   {currentStats.length > 0 ? (
                     <>
                       <div className="mb-4">
@@ -697,15 +816,15 @@ const ReportsPage = () => {
                             {currentStats.map((item, index) => {
                               const percentage = info.count > 0 ? (item.count / info.count) * 100 : 0
                               return (
-                                <tr 
-                                  key={item.category} 
+                                <tr
+                                  key={item.category}
                                   onClick={() => fetchUserDetailsByCategory(showDetails, item.category)}
-                                  className="transition-all cursor-pointer hover:shadow-md hover:scale-[1.01]" 
-                                  style={{ '--hover-color': info.hoverColor }} 
+                                  className="transition-all cursor-pointer hover:shadow-md hover:scale-[1.01]"
+                                  style={{ '--hover-color': info.hoverColor }}
                                   onMouseEnter={(e) => {
                                     e.currentTarget.style.backgroundColor = info.hoverColor
                                     e.currentTarget.style.transform = 'scale(1.01)'
-                                  }} 
+                                  }}
                                   onMouseLeave={(e) => {
                                     e.currentTarget.style.backgroundColor = 'transparent'
                                     e.currentTarget.style.transform = 'scale(1)'
@@ -732,7 +851,7 @@ const ReportsPage = () => {
                                     <div className="w-full bg-gray-200 rounded-full h-2">
                                       <div
                                         className="h-2 rounded-full transition-all duration-500"
-                                        style={{ 
+                                        style={{
                                           width: `${percentage}%`,
                                           background: info.gradient
                                         }}
@@ -759,7 +878,7 @@ const ReportsPage = () => {
                           </tfoot>
                         </table>
                       </div>
-                      
+
                       {/* Summary Cards */}
                       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className="rounded-lg p-4 border" style={{ backgroundColor: info.hoverColor, borderColor: info.cardColor + '40' }}>
@@ -783,7 +902,7 @@ const ReportsPage = () => {
                         <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
                           <p className="text-xs text-purple-600 font-medium mb-1">Average per Subcategory</p>
                           <p className="text-lg font-bold text-purple-900">
-                            {currentStats.length > 0 
+                            {currentStats.length > 0
                               ? Math.round(info.count / currentStats.length).toLocaleString()
                               : 0
                             }
@@ -833,16 +952,76 @@ const ReportsPage = () => {
                     {categoryInfo[selectedCategory.type]?.title} - Full user information ({userDetails.length} {userDetails.length === 1 ? 'user' : 'users'})
                   </p>
                 </div>
-                <button
-                  onClick={() => { setSelectedCategory(null); setUserDetails([]) }}
-                  className="p-2 hover:bg-white/50 rounded-lg transition-colors ml-4"
-                >
-                  <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => {
+                      if (userDetails.length === 0) return
+
+                      // Helper to get ALL fields from the item for export
+                      // We take the keys from the first item as a baseline, but ideally we should union all keys if items differ
+                      // For now, assuming consistent schema per table, first item keys are sufficient.
+                      // Actually, user requested "all fields".
+
+                      const firstItem = userDetails[0]
+                      const rawKeys = Object.keys(firstItem)
+
+                      // Format headers to be more readable (e.g., snake_case to Title Case)
+                      const formatHeader = (key) => {
+                        return key
+                          .replace(/_/g, ' ')
+                          .replace(/\b\w/g, c => c.toUpperCase())
+                      }
+
+                      const headers = rawKeys.map(key => formatHeader(key))
+
+                      const csvContent = [
+                        headers.join(','),
+                        ...userDetails.map(item => {
+                          return rawKeys.map(key => {
+                            let value = item[key]
+                            // Handle nulls
+                            if (value === null || value === undefined) {
+                              value = ''
+                            }
+                            // Handle objects/arrays (stringify them)
+                            if (typeof value === 'object') {
+                              value = JSON.stringify(value).replace(/"/g, '""') // Escape quotes for CSV
+                            } else {
+                              value = String(value).replace(/"/g, '""')
+                            }
+                            return `"${value}"`
+                          }).join(',')
+                        })
+                      ].join('\n')
+
+                      // Create blob and download link
+                      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+                      const link = document.createElement('a')
+                      link.href = URL.createObjectURL(blob)
+                      link.setAttribute('download', `${selectedCategory.category}_Full_Report_${new Date().toISOString().split('T')[0]}.csv`)
+                      document.body.appendChild(link)
+                      link.click()
+                      document.body.removeChild(link)
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
+                    title="Download Full CSV Report"
+                  >
+                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span className="font-medium">Download Full Report</span>
+                  </button>
+                  <button
+                    onClick={() => { setSelectedCategory(null); setUserDetails([]) }}
+                    className="p-2 hover:bg-white/50 rounded-lg transition-colors"
+                  >
+                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              
+
               <div className="flex-1 overflow-y-auto p-6">
                 {loadingDetails ? (
                   <div className="flex items-center justify-center py-12">
@@ -856,8 +1035,8 @@ const ReportsPage = () => {
                     {userDetails.map((item, index) => {
                       const displayFields = getUserDisplayFields(selectedCategory.type, item)
                       return (
-                        <div 
-                          key={item.id || index} 
+                        <div
+                          key={item.id || index}
                           className="bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden"
                         >
                           <div className="p-5 border-b border-gray-200" style={{ background: categoryInfo[selectedCategory.type]?.bgGradient || '#F3F4F6' }}>
@@ -885,7 +1064,7 @@ const ReportsPage = () => {
                               )}
                             </div>
                           </div>
-                          
+
                           <div className="p-5">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               {Object.entries(displayFields).map(([key, value]) => {
@@ -902,15 +1081,15 @@ const ReportsPage = () => {
                                 )
                               })}
                             </div>
-                            
+
                             {(item.upload_file_url || item.upload_resume_url) && (
                               <div className="mt-4 pt-4 border-t border-gray-200">
                                 <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
                                   Uploaded File
                                 </p>
-                                <a 
-                                  href={item.upload_file_url || item.upload_resume_url} 
-                                  target="_blank" 
+                                <a
+                                  href={item.upload_file_url || item.upload_resume_url}
+                                  target="_blank"
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
                                 >

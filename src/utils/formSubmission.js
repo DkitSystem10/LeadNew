@@ -247,42 +247,149 @@ export const submitStudentInternshipApplication = async (formData) => {
  */
 export const submitCareerGuidanceApplication = async (formData) => {
   try {
-    const { data, error } = await supabase
-      .from('career_guidance_applications')
-      .insert([
-        {
-          date: formData.date,
-          category: formData.category,
-          categoryname: formData.category,
+    let table = ''
+    let dataToInsert = {}
+
+    // Route to specialized tables based on category/subcategory
+    if (formData.category === 'Student Career Counselling') {
+      table = 'student_career_counselling'
+      dataToInsert = {
+        student_name: formData.studentName,
+        age: parseInt(formData.age) || 0,
+        current_class_year: formData.currentClassYear || null,
+        school_college_name: formData.schoolCollegeName || null,
+        city: formData.city || null,
+        current_stream_subjects: formData.currentStreamSubjects || null,
+        last_exam_result: formData.lastExamResult || null,
+        subject_enjoy_most: formData.subjectEnjoyMost || null,
+        subject_struggle_with: formData.subjectStruggleWith || null,
+        has_career_goal: formData.hasCareerGoal || null,
+        career_goal_mention: formData.careerGoalMention || null,
+        biggest_confusion: formData.biggestConfusion || null,
+        counselling_expectation: formData.counsellingExpectation || null,
+        preferred_mode: formData.preferredMode || null,
+        preferred_language: formData.preferredLanguage || null,
+        pincode: formData.pincode || null
+      }
+    } else if (formData.category === 'Suitability test') {
+      table = 'suitability_test_applications'
+      dataToInsert = {
+        candidate_name: formData.studentName,
+        age: parseInt(formData.age) || 0,
+        education_level: formData.educationLevel || null,
+        city: formData.city || null,
+        subjects_well_performing: formData.subjectsWellPerforming || null,
+        activities_enjoy_most: formData.activitiesEnjoyMost || null,
+        prefer_working_with: formData.preferWorkingWith || null,
+        logic_solving: formData.logicSolving || null,
+        creative_tasks: formData.creativeTasks || null,
+        test_reason: formData.testReason || null,
+        assessment_consent: formData.assessmentConsent || null,
+        pincode: formData.pincode || null
+      }
+    } else if (formData.category === 'Study Abroad Guidance') {
+      table = 'study_abroad_guidance_applications'
+      dataToInsert = {
+        student_name: formData.studentName,
+        age: parseInt(formData.age) || 0,
+        current_qualification: formData.currentQualification || null,
+        city: formData.city || null,
+        contact_number: formData.contactNumber || null,
+        highest_qualification: formData.highestQualification || null,
+        academic_score_gpa: formData.academicScoreGpa || null,
+        medium_of_instruction: formData.mediumOfInstruction || null,
+        preferred_countries: formData.preferredCountry || null,
+        intended_study_level: formData.intendedStudyLevel || null,
+        preferred_field: formData.preferredField || null,
+        english_test_status: formData.englishTestStatus || null,
+        target_intake_year: formData.targetIntakeYear || null,
+        budget_range: formData.budgetRange || null,
+        pincode: formData.pincode || null
+      }
+    } else if (formData.category === '15 Years Career Roadmap') {
+      if (formData.roadmapType === 'school') {
+        table = 'roadmap_school_student_applications'
+        dataToInsert = {
           student_name: formData.studentName,
-          standard_year: formData.standardYear,
-          date_of_birth: formData.dateOfBirth,
           age: parseInt(formData.age) || 0,
-          gender: formData.gender,
-          location: formData.location,
-          contact_number: formData.contactNumber,
-          email: formData.email,
-          parent_guardian_name: formData.parentGuardianName,
-          studies_preference: formData.studiesPreference,
-          abroad_local: formData.abroadLocal,
-          preferred_country: formData.preferredCountry || null,
-          city_if_abroad: formData.cityIfAbroad || null,
-          preferred_university: formData.preferredUniversity || null,
-          career_interest: formData.careerInterest || null,
-          skills_strengths: formData.skillsStrengths || null,
-          academic_performance: formData.academicPerformance || null,
-          hobbies_extracurricular: formData.hobbiesExtracurricular || null,
-          preferred_mode_of_study: formData.preferredModeOfStudy,
-          career_support_duration: formData.careerSupportDuration,
-          mentorship_required: formData.mentorshipRequired,
-          remarks_notes: formData.remarksNotes || null
+          current_class: formData.currentClass || null,
+          school_name: formData.schoolName || null,
+          city: formData.city || null,
+          parent_guardian_name: formData.parentGuardianName || null,
+          parent_contact_number: formData.parentContactNumber || null,
+          current_board_syllabus: formData.currentBoardSyllabus || null,
+          subjects_studied: formData.subjectsStudied || null,
+          last_exam_result: formData.lastExamResult || null,
+          favourite_subject: formData.favouriteSubject || null,
+          most_difficult_subject: formData.mostDifficultSubject || null,
+          support_needed: Array.isArray(formData.supportNeeded) ? formData.supportNeeded.join(', ') : formData.supportNeeded || null,
+          has_career_idea: formData.careerIdea || null,
+          career_idea_mention: formData.careerGoalMention || null,
+          biggest_confusion: formData.biggestConfusionRoadmap || null,
+          preferred_mode: formData.preferredMode || null,
+          preferred_language: formData.preferredLanguage || null,
+          parent_concern: formData.parentConcern || null,
+          pincode: formData.pincode || null
         }
-      ])
+      } else if (formData.roadmapType === 'college') {
+        table = 'roadmap_college_student_applications'
+        dataToInsert = {
+          full_name: formData.studentName,
+          age: parseInt(formData.age) || 0,
+          degree_course: formData.degreeCourse || null,
+          institution_name: formData.institutionName || null,
+          city: formData.city || null,
+          contact_number: formData.contactNumber || null,
+          email_id: formData.email || null,
+          current_year_semester: formData.currentYearSemester || null,
+          major_specialization: formData.majorSpecialization || null,
+          current_cgpa_percentage: formData.currentCgpaPercentage || null,
+          key_skills: formData.keySkills || null,
+          guidance_needed: Array.isArray(formData.supportNeeded) ? formData.supportNeeded.join(', ') : formData.supportNeeded || null,
+          career_intention: formData.careerIntention || null,
+          course_satisfaction: formData.courseSatisfaction || null,
+          preferred_future_path: formData.preferredFuturePath || null,
+          planning_study_abroad: formData.planningStudyAbroad || null,
+          target_country: formData.preferredCountry || null,
+          mentoring_interest: formData.mentoringInterest || null,
+          pincode: formData.pincode || null
+        }
+      } else if (formData.roadmapType === 'professional') {
+        table = 'roadmap_professional_applications'
+        dataToInsert = {
+          full_name: formData.studentName,
+          age: parseInt(formData.age) || 0,
+          current_job_role: formData.currentJobRole || null,
+          industry_sector: formData.industrySector || null,
+          total_work_experience: formData.workExperience || null,
+          city: formData.city || null,
+          contact_number: formData.contactNumber || null,
+          core_skills_current_job: formData.coreSkillsCurrentJob || null,
+          certifications_training: formData.certificationsTraining || null,
+          job_satisfaction_level: parseInt(formData.jobSatisfactionLevel) || 0,
+          support_looking_for: Array.isArray(formData.supportNeeded) ? formData.supportNeeded.join(', ') : formData.supportNeeded || null,
+          primary_reason_guidance: formData.guidanceReason || null,
+          career_switch_2_years: formData.careerSwitchPlan || null,
+          upskill_willingness: formData.upskillWillingness || null,
+          mentoring_interest: formData.mentoringInterest || null,
+          specific_challenge: formData.specificChallenge || null,
+          pincode: formData.pincode || null
+        }
+      }
+    }
+
+    if (!table) {
+      throw new Error('Invalid specialized application type')
+    }
+
+    const { data, error } = await supabase
+      .from(table)
+      .insert([dataToInsert])
       .select()
 
     if (error) {
-      console.error('Supabase error:', error)
-      throw new Error(error.message || 'Failed to save application. Please check your database setup.')
+      console.error(`Supabase error (${table}):`, error)
+      throw new Error(error.message || `Failed to save ${table} application.`)
     }
     return { success: true, data }
   } catch (error) {
