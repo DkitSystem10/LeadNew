@@ -297,23 +297,126 @@ const CareerGuidancePage = () => {
     }
   ]
 
+  const resetFormData = () => {
+    return {
+      date: getTodayDate(),
+      category: '',
+      studentName: '',
+      standardYear: '',
+      dateOfBirth: '',
+      age: '',
+      gender: '',
+      location: '',
+      contactNumber: '',
+      email: '',
+      parentGuardianName: '',
+      studiesPreference: '',
+      studiesPreferenceOthers: '',
+      abroadLocal: '',
+      preferredCountry: '',
+      cityIfAbroad: '',
+      preferredUniversity: '',
+      careerInterest: '',
+      skillsStrengths: '',
+      academicPerformance: '',
+      hobbiesExtracurricular: '',
+      preferredModeOfStudy: '',
+      careerSupportDuration: '',
+      mentorshipRequired: '',
+      remarksNotes: '',
+      currentClassYear: '',
+      schoolCollegeName: '',
+      city: '',
+      currentStreamSubjects: '',
+      lastExamResult: '',
+      subjectEnjoyMost: '',
+      subjectStruggleWith: '',
+      hasCareerGoal: '',
+      careerGoalMention: '',
+      biggestConfusion: '',
+      counsellingExpectation: '',
+      preferredMode: '',
+      preferredLanguage: '',
+      preferredLanguageOthers: '',
+      pincode: '',
+      cityOthers: '',
+      currentClassYearOthers: '',
+      currentClassOthers: '',
+      currentBoardSyllabusOthers: '',
+      favouriteSubjectOthers: '',
+      mostDifficultSubjectOthers: '',
+      subjectEnjoyMostOthers: '',
+      subjectStruggleWithOthers: '',
+      educationLevel: '',
+      subjectsWellPerforming: '',
+      activitiesEnjoyMost: '',
+      preferWorkingWith: '',
+      logicSolving: '',
+      creativeTasks: '',
+      testReason: '',
+      assessmentConsent: '',
+      currentQualification: '',
+      highestQualification: '',
+      academicScoreGpa: '',
+      mediumOfInstruction: '',
+      intendedStudyLevel: '',
+      preferredField: '',
+      englishTestStatus: '',
+      targetIntakeYear: '',
+      budgetRange: '',
+      roadmapType: '',
+      parentContactNumber: '',
+      currentBoardSyllabus: '',
+      subjectsStudied: '',
+      favouriteSubject: '',
+      mostDifficultSubject: '',
+      supportNeeded: [],
+      careerIdea: '',
+      biggestConfusionRoadmap: '',
+      parentConcern: '',
+      degreeCourse: '',
+      institutionName: '',
+      currentYearSemester: '',
+      majorSpecialization: '',
+      currentCgpaPercentage: '',
+      keySkills: '',
+      careerIntention: '',
+      courseSatisfaction: '',
+      preferredFuturePath: '',
+      planningStudyAbroad: '',
+      mentoringInterest: '',
+      currentJobRole: '',
+      industrySector: '',
+      workExperience: '',
+      coreSkillsCurrentJob: '',
+      certificationsTraining: '',
+      jobSatisfactionLevel: '',
+      guidanceReason: '',
+      careerSwitchPlan: '',
+      upskillWillingness: '',
+      specificChallenge: ''
+    }
+  }
+
   const handleSubCategoryClick = (subCategoryId) => {
     const subCategory = careerGuidanceSubCategories.find(sc => sc.id === subCategoryId)
     setSelectedSubCategory(subCategoryId)
-    setFormData(prev => ({
-      ...prev,
+    // Reset all form data and set new category
+    const freshData = resetFormData()
+    setFormData({
+      ...freshData,
       category: subCategory?.label || ''
-    }))
+    })
+    setErrors({}) // Clear all errors
     setView('form')
   }
 
   const handleBackToSubCategories = () => {
     setView('subcategories')
     setSelectedSubCategory('')
-    setFormData(prev => ({
-      ...prev,
-      category: ''
-    }))
+    // Completely reset form data
+    setFormData(resetFormData())
+    setErrors({}) // Clear all errors
   }
 
   const handleCategorySelect = (categoryValue) => {

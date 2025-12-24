@@ -115,23 +115,39 @@ const PartnersPage = () => {
     }
   ]
 
+  const resetFormData = () => {
+    return {
+      date: getTodayDate(),
+      category: '',
+      contactPersonName: '',
+      organizationName: '',
+      organizationAddress: '',
+      email: '',
+      phoneNumber: '',
+      uploadFile: null,
+      remarks: ''
+    }
+  }
+
   const handleSubCategoryClick = (subCategoryId) => {
     const subCategory = partnerSubCategories.find(sc => sc.id === subCategoryId)
     setSelectedSubCategory(subCategoryId)
-    setFormData(prev => ({
-      ...prev,
+    // Reset all form data and set new category
+    const freshData = resetFormData()
+    setFormData({
+      ...freshData,
       category: subCategory?.label || ''
-    }))
+    })
+    setErrors({}) // Clear all errors
     setView('form')
   }
 
   const handleBackToSubCategories = () => {
     setView('subcategories')
     setSelectedSubCategory('')
-    setFormData(prev => ({
-      ...prev,
-      category: ''
-    }))
+    // Completely reset form data
+    setFormData(resetFormData())
+    setErrors({}) // Clear all errors
   }
 
   const handleChange = (e) => {

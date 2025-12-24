@@ -146,23 +146,47 @@ const JobSeekerPage = () => {
     }
   ]
 
+  const resetFormData = () => {
+    return {
+      date: getTodayDate(),
+      category: '',
+      fullName: '',
+      gender: '',
+      dob: '',
+      age: '',
+      address: '',
+      bloodGroup: '',
+      contactNumber: '',
+      email: '',
+      qualification: '',
+      department: '',
+      departmentOthers: '',
+      yearsOfExperience: '',
+      preferredJobType: '',
+      uploadResume: null,
+      remarks: ''
+    }
+  }
+
   const handleSubCategoryClick = (subCategoryId) => {
     const subCategory = jobSubCategories.find(sc => sc.id === subCategoryId)
     setSelectedSubCategory(subCategoryId)
-    setFormData(prev => ({
-      ...prev,
+    // Reset all form data and set new category
+    const freshData = resetFormData()
+    setFormData({
+      ...freshData,
       category: subCategory?.label || ''
-    }))
+    })
+    setErrors({}) // Clear all errors
     setView('form')
   }
 
   const handleBackToSubCategories = () => {
     setView('subcategories')
     setSelectedSubCategory('')
-    setFormData(prev => ({
-      ...prev,
-      category: ''
-    }))
+    // Completely reset form data
+    setFormData(resetFormData())
+    setErrors({}) // Clear all errors
   }
 
   const calculateAge = (dateOfBirth) => {
