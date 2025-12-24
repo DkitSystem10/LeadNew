@@ -24,9 +24,11 @@ const FormInput = ({
         value={value}
         onChange={(e) => {
           // If it's a phone or contact field, restrict to digits and max 10
-          if (type === 'tel' ||
+          // BUT exclude contactPersonName field
+          if (name !== 'contactPersonName' && (
+            type === 'tel' ||
             name.toLowerCase().includes('phone') ||
-            name.toLowerCase().includes('contact')) {
+            name.toLowerCase().includes('contact'))) {
             const val = e.target.value;
             if (!/^\d*$/.test(val)) return;
             if (val.length > 10) return;
@@ -39,8 +41,8 @@ const FormInput = ({
         disabled={disabled}
         readOnly={readOnly}
         className={`input-modern w-full px-3 py-2.5 border rounded-md focus:outline-none text-sm ${error
-            ? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-200'
-            : 'border-gray-300 bg-white focus:border-[#409891] focus:ring-[#409891]/30'
+          ? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-200'
+          : 'border-gray-300 bg-white focus:border-[#409891] focus:ring-[#409891]/30'
           } ${disabled || readOnly ? 'bg-gray-50 cursor-not-allowed text-gray-500' : ''} 
         placeholder:text-gray-400`}
       />

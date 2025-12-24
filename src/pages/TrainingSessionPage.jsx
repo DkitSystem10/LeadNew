@@ -11,7 +11,7 @@ const TrainingSessionPage = () => {
   const [view, setView] = useState('categories') // 'categories', 'subcategories', 'form'
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedSubCategory, setSelectedSubCategory] = useState('')
-  
+
   const [formData, setFormData] = useState({
     date: getTodayDate(),
     category: '',
@@ -43,7 +43,7 @@ const TrainingSessionPage = () => {
               <stop offset="100%" stopColor="#764BA2" />
             </linearGradient>
           </defs>
-          <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="url(#aiGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#aiGradient)" fillOpacity="0.1"/>
+          <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="url(#aiGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#aiGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
@@ -59,7 +59,7 @@ const TrainingSessionPage = () => {
               <stop offset="100%" stopColor="#F5576C" />
             </linearGradient>
           </defs>
-          <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#languageGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#languageGradient)" fillOpacity="0.1"/>
+          <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#languageGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#languageGradient)" fillOpacity="0.1" />
         </svg>
       )
     },
@@ -75,8 +75,8 @@ const TrainingSessionPage = () => {
               <stop offset="100%" stopColor="#FEE140" />
             </linearGradient>
           </defs>
-          <circle cx="12" cy="12" r="10" stroke="url(#financeGradient)" strokeWidth="2" fill="url(#financeGradient)" fillOpacity="0.1"/>
-          <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" stroke="url(#financeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="12" cy="12" r="10" stroke="url(#financeGradient)" strokeWidth="2" fill="url(#financeGradient)" fillOpacity="0.1" />
+          <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" stroke="url(#financeGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       )
     },
@@ -92,7 +92,7 @@ const TrainingSessionPage = () => {
               <stop offset="100%" stopColor="#44A08D" />
             </linearGradient>
           </defs>
-          <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#businessGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#businessGradient)" fillOpacity="0.1"/>
+          <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#businessGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#businessGradient)" fillOpacity="0.1" />
         </svg>
       )
     }
@@ -101,8 +101,8 @@ const TrainingSessionPage = () => {
   // Sub-Categories by Main Category
   const subCategories = {
     'ai-robotics': [
-      { 
-        id: 'k12-robotics', 
+      {
+        id: 'k12-robotics',
         label: 'K-12 Robotics',
         image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -113,12 +113,12 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#764BA2" />
               </linearGradient>
             </defs>
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#roboticsGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#roboticsGradient)" fillOpacity="0.1"/>
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#roboticsGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#roboticsGradient)" fillOpacity="0.1" />
           </svg>
         )
       },
-      { 
-        id: 'aicra-courses', 
+      {
+        id: 'aicra-courses',
         label: 'AICRA Courses',
         image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1200&h=1200&fit=crop&q=90&auto=format',
         icon: (
@@ -129,14 +129,14 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#44A08D" />
               </linearGradient>
             </defs>
-            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="url(#aicraGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#aicraGradient)" fillOpacity="0.1"/>
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="url(#aicraGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#aicraGradient)" fillOpacity="0.1" />
           </svg>
         )
       }
     ],
     'languages': [
-      { 
-        id: 'indian-languages', 
+      {
+        id: 'indian-languages',
         label: 'Indian Languages',
         image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -147,12 +147,12 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#F5576C" />
               </linearGradient>
             </defs>
-            <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#indianLangGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#indianLangGradient)" fillOpacity="0.1"/>
+            <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#indianLangGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#indianLangGradient)" fillOpacity="0.1" />
           </svg>
         )
       },
-      { 
-        id: 'foreign-languages', 
+      {
+        id: 'foreign-languages',
         label: 'Foreign Languages',
         image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -163,14 +163,14 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#FEE140" />
               </linearGradient>
             </defs>
-            <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#foreignLangGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#foreignLangGradient)" fillOpacity="0.1"/>
+            <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" stroke="url(#foreignLangGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#foreignLangGradient)" fillOpacity="0.1" />
           </svg>
         )
       }
     ],
     'finance': [
-      { 
-        id: 'accounting-taxation', 
+      {
+        id: 'accounting-taxation',
         label: 'Accounting & Taxation',
         image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -181,13 +181,13 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#330867" />
               </linearGradient>
             </defs>
-            <circle cx="12" cy="12" r="10" stroke="url(#accountingGradient)" strokeWidth="2" fill="url(#accountingGradient)" fillOpacity="0.1"/>
-            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" stroke="url(#accountingGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="12" cy="12" r="10" stroke="url(#accountingGradient)" strokeWidth="2" fill="url(#accountingGradient)" fillOpacity="0.1" />
+            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" stroke="url(#accountingGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         )
       },
-      { 
-        id: 'company-formation', 
+      {
+        id: 'company-formation',
         label: 'Company Formation & Entrepreneurship',
         image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -198,14 +198,14 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#FF8E53" />
               </linearGradient>
             </defs>
-            <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#companyGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#companyGradient)" fillOpacity="0.1"/>
+            <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#companyGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#companyGradient)" fillOpacity="0.1" />
           </svg>
         )
       }
     ],
     'business': [
-      { 
-        id: 'digital-business-admin', 
+      {
+        id: 'digital-business-admin',
         label: 'Digital Business Administration',
         image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -216,12 +216,12 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#44A08D" />
               </linearGradient>
             </defs>
-            <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#businessAdminGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#businessAdminGradient)" fillOpacity="0.1"/>
+            <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#businessAdminGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#businessAdminGradient)" fillOpacity="0.1" />
           </svg>
         )
       },
-      { 
-        id: 'digital-entrepreneurship', 
+      {
+        id: 'digital-entrepreneurship',
         label: 'Digital Entrepreneurship Development',
         image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -232,12 +232,12 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#FEE140" />
               </linearGradient>
             </defs>
-            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="url(#entrepreneurshipGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#entrepreneurshipGradient)" fillOpacity="0.1"/>
+            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="url(#entrepreneurshipGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#entrepreneurshipGradient)" fillOpacity="0.1" />
           </svg>
         )
       },
-      { 
-        id: 'digital-content', 
+      {
+        id: 'digital-content',
         label: 'Digital Content Development',
         image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -248,12 +248,12 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#764BA2" />
               </linearGradient>
             </defs>
-            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#contentGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#contentGradient)" fillOpacity="0.1"/>
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#contentGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#contentGradient)" fillOpacity="0.1" />
           </svg>
         )
       },
-      { 
-        id: 'digital-marketing', 
+      {
+        id: 'digital-marketing',
         label: 'Digital Marketing',
         image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&h=1200&fit=crop&q=80',
         icon: (
@@ -264,7 +264,7 @@ const TrainingSessionPage = () => {
                 <stop offset="100%" stopColor="#F5576C" />
               </linearGradient>
             </defs>
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00.94-2.61c0-.67-.34-1.33-.94-1.94M9 19H5a2 2 0 01-2-2V7a2 2 0 012-2h4m5 4a9 9 0 11-18 0 9 9 0 0118 0z" stroke="url(#marketingGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#marketingGradient)" fillOpacity="0.1"/>
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00.94-2.61c0-.67-.34-1.33-.94-1.94M9 19H5a2 2 0 01-2-2V7a2 2 0 012-2h4m5 4a9 9 0 11-18 0 9 9 0 0118 0z" stroke="url(#marketingGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#marketingGradient)" fillOpacity="0.1" />
           </svg>
         )
       }
@@ -302,16 +302,16 @@ const TrainingSessionPage = () => {
   // Calculate age from date of birth
   const calculateAge = (dateOfBirth) => {
     if (!dateOfBirth) return ''
-    
+
     const today = new Date()
     const birthDate = new Date(dateOfBirth)
     let age = today.getFullYear() - birthDate.getFullYear()
     const monthDiff = today.getMonth() - birthDate.getMonth()
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--
     }
-    
+
     return age >= 0 ? age.toString() : ''
   }
 
@@ -322,12 +322,12 @@ const TrainingSessionPage = () => {
         ...prev,
         [name]: value
       }
-      
+
       // Auto-calculate age when D.O.B changes
       if (name === 'dateOfBirth') {
         updatedData.age = calculateAge(value)
       }
-      
+
       return updatedData
     })
     // Clear error for this field and age if D.O.B changes
@@ -387,7 +387,7 @@ const TrainingSessionPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
@@ -396,11 +396,11 @@ const TrainingSessionPage = () => {
 
     try {
       await submitTrainingSessionApplication(formData)
-      navigate('/success', { 
-        state: { 
+      navigate('/success', {
+        state: {
           formType: 'Course Enquiry / Registration Application',
           title: 'Course Enquiry / Registration Submitted Successfully!'
-        } 
+        }
       })
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -413,7 +413,18 @@ const TrainingSessionPage = () => {
   // Main Categories View
   if (view === 'categories') {
     return (
-      <div className="container-custom py-6 md:py-8 lg:py-12">
+      <div className="container-custom py-6 md:py-8 lg:py-12 relative">
+        {/* Mobile Floating Back Button */}
+        <button
+          onClick={() => navigate('/')}
+          className="lg:hidden fixed top-4 left-4 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-[#409891] text-white shadow-lg active:scale-95 transition-all duration-200"
+          aria-label="Go back"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-10 px-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-3" style={{ color: '#1F2937' }}>
@@ -434,7 +445,7 @@ const TrainingSessionPage = () => {
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
               >
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
                     backgroundImage: `url(${category.image})`,
@@ -453,7 +464,7 @@ const TrainingSessionPage = () => {
                     {category.title}
                   </h3>
                 </div>
-                <div 
+                <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                   style={{
                     background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'
@@ -505,7 +516,7 @@ const TrainingSessionPage = () => {
                   aspectRatio: '1 / 1'
                 }}
               >
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
                     backgroundImage: `url(${subCategory.image})`,
@@ -515,10 +526,10 @@ const TrainingSessionPage = () => {
                     filter: subCategory.id === 'aicra-courses' ? 'blur(1px)' : 'blur(2px)'
                   }}
                 />
-                <div 
+                <div
                   className="absolute inset-0 transition-all duration-300"
                   style={{
-                    background: subCategory.id === 'aicra-courses' 
+                    background: subCategory.id === 'aicra-courses'
                       ? 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25))'
                       : 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6))'
                   }}
@@ -531,7 +542,7 @@ const TrainingSessionPage = () => {
                     {subCategory.label}
                   </h3>
                 </div>
-                <div 
+                <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                   style={{
                     background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)'
