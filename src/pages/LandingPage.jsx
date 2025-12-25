@@ -255,7 +255,7 @@ const LandingPage = () => {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-28 sm:bottom-32 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-3xl"
+          className="fixed bottom-28 lg:bottom-6 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-3xl"
           style={{
             background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
             boxShadow: '0 4px 20px rgba(64, 152, 145, 0.4)'

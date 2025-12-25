@@ -59,14 +59,14 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
     <>
       {/* Mobile Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`
           fixed lg:fixed top-0 left-0 h-screen flex flex-col shadow-lg z-50
           transform transition-transform duration-300 ease-in-out
@@ -75,7 +75,7 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
           w-64 lg:w-56 xl:w-64
         `}
         style={{
-          background: 'linear-gradient(to bottom, #E6E5E1 0%, #E6E5E1 100%)',
+          background: '#FFFFFF',
           borderRight: '1px solid rgba(64, 152, 145, 0.15)',
           overflowY: 'auto',
           overflowX: 'hidden'
@@ -89,10 +89,10 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
             className="p-2 rounded-lg hover:bg-gray-200 transition-colors"
             aria-label="Close menu"
           >
-            <svg 
-              className="w-6 h-6" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
               style={{ color: '#409891' }}
             >
@@ -110,11 +110,10 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
                   key={item.path}
                   to={item.path}
                   onClick={onClose}
-                  className={`flex items-center px-4 lg:px-5 py-3.5 rounded-xl text-sm sm:text-base lg:text-lg font-medium transition-all duration-200 ${
-                    isActive
+                  className={`flex items-center px-4 lg:px-5 py-3.5 rounded-xl text-sm sm:text-base lg:text-lg font-medium transition-all duration-200 ${isActive
                       ? 'text-white shadow-md font-semibold'
                       : 'hover:text-white hover:shadow-sm border border-transparent'
-                  }`}
+                    }`}
                   style={isActive ? {
                     background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                     border: '1px solid rgba(64, 152, 145, 0.3)',
@@ -149,11 +148,10 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
             <div>
               <button
                 onClick={() => setCategoriesOpen(!categoriesOpen)}
-                className={`w-full flex items-center justify-between px-4 lg:px-5 py-3.5 rounded-xl text-sm sm:text-base lg:text-lg font-medium transition-all duration-200 ${
-                  categoriesOpen
+                className={`w-full flex items-center justify-between px-4 lg:px-5 py-3.5 rounded-xl text-sm sm:text-base lg:text-lg font-medium transition-all duration-200 ${categoriesOpen
                     ? 'text-white shadow-md font-semibold'
                     : 'hover:text-white hover:shadow-sm border border-transparent'
-                }`}
+                  }`}
                 style={categoriesOpen ? {
                   background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                   border: '1px solid rgba(64, 152, 145, 0.3)',
@@ -200,11 +198,10 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
                         key={category.path}
                         to={category.path}
                         onClick={onClose}
-                        className={`block px-4 py-2.5 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 ${
-                          isActive
+                        className={`block px-4 py-2.5 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 ${isActive
                             ? 'text-white shadow-md'
                             : 'hover:shadow-sm'
-                        }`}
+                          }`}
                         style={isActive ? {
                           background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                           boxShadow: '0 2px 8px rgba(64, 152, 145, 0.25)',
@@ -238,11 +235,10 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
             <Link
               to="/reports"
               onClick={onClose}
-              className={`flex items-center px-4 lg:px-5 py-3.5 rounded-xl text-sm sm:text-base lg:text-lg font-medium transition-all duration-200 ${
-                location.pathname === '/reports'
+              className={`flex items-center px-4 lg:px-5 py-3.5 rounded-xl text-sm sm:text-base lg:text-lg font-medium transition-all duration-200 ${location.pathname === '/reports'
                   ? 'text-white shadow-md font-semibold'
                   : 'hover:text-white hover:shadow-sm border border-transparent'
-              }`}
+                }`}
               style={location.pathname === '/reports' ? {
                 background: 'linear-gradient(135deg, #409891 0%, #48ADB7 100%)',
                 border: '1px solid rgba(64, 152, 145, 0.3)',
@@ -272,7 +268,7 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
             </Link>
           </nav>
         </div>
-        
+
         {/* Logout Button and Copyright Section at Bottom */}
         <div className="mt-auto" style={{
           borderTop: '1px solid rgba(64, 152, 145, 0.15)'
@@ -304,7 +300,7 @@ const Sidebar = ({ isOpen, onClose, showOnDesktop = true }) => {
               <span>Logout</span>
             </button>
           </div>
-          
+
           {/* Copyright Section */}
           <div className="p-4 pt-0" style={{
             borderTop: '1px solid rgba(64, 152, 145, 0.1)'

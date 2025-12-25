@@ -1,12 +1,13 @@
-const FormTextarea = ({ 
-  label, 
-  name, 
-  value, 
-  onChange, 
-  error, 
+const FormTextarea = ({
+  label,
+  name,
+  value,
+  onChange,
+  error,
   required = false,
   placeholder = '',
-  rows = 4
+  rows = 4,
+  maxWords = 500
 }) => {
   return (
     <div className="mb-5">
@@ -20,12 +21,16 @@ const FormTextarea = ({
         onChange={onChange}
         placeholder={placeholder}
         rows={rows}
-        className={`input-modern w-full px-3 py-2.5 border rounded-md focus:outline-none text-sm resize-vertical ${
-          error 
-            ? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-200' 
-            : 'border-gray-300 bg-white focus:border-[#409891] focus:ring-[#409891]/30'
-        } placeholder:text-gray-400`}
+        className={`input-modern w-full px-3 py-2.5 border rounded-md focus:outline-none text-sm resize-vertical ${error
+          ? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-200'
+          : 'border-gray-300 bg-white focus:border-[#409891] focus:ring-[#409891]/30'
+          } placeholder:text-gray-400`}
       />
+      {name.toLowerCase().includes('remarks') && (
+        <p className="mt-1.5 text-xs text-gray-500">
+          Maximum {maxWords} words
+        </p>
+      )}
       {error && (
         <p className="mt-1.5 text-sm text-red-600">
           {error}
